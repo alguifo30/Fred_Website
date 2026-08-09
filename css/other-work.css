@@ -1,0 +1,332 @@
+/* ============================================================
+   F.RED — OTHER WORK  (v25.2)
+   ------------------------------------------------------------
+   Fully additive. Nothing here overrides an existing selector —
+   every class below is new, scoped to the "Other Work" tier on
+   the home page and to the two research case studies. Delete
+   this file and only that tier disappears; the four flagship
+   cases and the rest of the site are untouched.
+
+   Same design system throughout: Onyx, Bone, Rhythm Red, the
+   site's mono/display fonts, hairlines instead of containers.
+   No cards, no colour blocks, no dashboard aesthetic.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1 · TRANSITION — home page, inside #work
+   ------------------------------------------------------------ */
+
+.work-other {
+  margin-top: clamp(56px, 6vw, 88px);
+  padding-top: clamp(40px, 4.4vw, 64px);
+  border-top: 1px solid rgba(255, 255, 255, .12);
+}
+.work-other__head { max-width: 640px; }
+.work-other__title {
+  font-size: clamp(26px, 2.8vw, 42px) !important;
+  max-width: 560px !important;
+  margin-top: 10px;
+}
+.work-other .lead { font-size: 16px; margin-top: 14px; max-width: 560px; }
+
+/* ------------------------------------------------------------
+   2 · OTHER WORK GRID — two columns, editorial, no card shell
+   ------------------------------------------------------------ */
+
+.work-other__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: clamp(32px, 3.6vw, 52px);
+  border-top: 1px solid rgba(255, 255, 255, .12);
+}
+
+.other-case {
+  padding: clamp(28px, 3vw, 42px) clamp(24px, 2.6vw, 40px) clamp(32px, 3.4vw, 46px);
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+  display: flex;
+  flex-direction: column;
+  transition: background .35s ease, padding .35s var(--ease);
+}
+/* The dividing line between the two columns — a rule, not a boxed card. */
+.other-case:first-child { border-right: 1px solid rgba(255, 255, 255, .12); padding-left: 0; }
+.other-case:last-child { padding-right: 0; }
+
+.other-case__top {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.other-case__n {
+  font: 500 12px/1 var(--mono);
+  color: var(--red);
+  letter-spacing: .04em;
+}
+.other-case__cat {
+  font: 500 9px/1.5 var(--mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #777;
+}
+.other-case__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 9px/1.5 var(--mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 18px;
+}
+.other-case__meta .client-mark { width: 20px; height: 20px; }
+.other-case__q {
+  margin: 0 0 14px;
+  font: 800 clamp(22px, 2.1vw, 30px)/1.06 var(--display);
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  max-width: 26ch;
+  text-wrap: balance;
+}
+.other-case__summary {
+  margin: 0;
+  color: #aaa9a4;
+  font-size: 14.5px;
+  line-height: 1.58;
+  max-width: 48ch;
+}
+
+.other-case__foot {
+  margin-top: auto;
+  padding-top: 22px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.other-case__metric { display: flex; flex-direction: column; gap: 2px; }
+.other-case__metric strong {
+  font: 800 clamp(28px, 3vw, 40px)/1 var(--display);
+  letter-spacing: -.04em;
+}
+.other-case__metric span {
+  font: 500 9px/1.4 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.other-case__metric em {
+  font: 500 10px/1.5 var(--mono);
+  font-style: normal;
+  letter-spacing: .02em;
+  color: #6f6f6c;
+  margin-top: 4px;
+}
+.other-case__cta {
+  font: 500 11px/1 var(--mono);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--bone);
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color .3s ease, border-color .3s ease, transform .3s var(--ease);
+  white-space: nowrap;
+}
+
+/* Hover language matches the flagship rows: a moving CTA, a red rule,
+   a touch more luminosity — never a zoom, a glow or a background swap. */
+@media (hover: hover) {
+  .other-case:hover { background: rgba(255, 255, 255, .015); }
+  .other-case:hover .other-case__q { color: #fff; }
+  .other-case:hover .other-case__cta { color: var(--red); border-color: var(--red); transform: translateX(3px); }
+}
+.other-case:focus-within .other-case__cta { color: var(--red); border-color: var(--red); }
+
+@media (max-width: 980px) {
+  .work-other__grid { grid-template-columns: 1fr; }
+  .other-case:first-child { border-right: 0; padding-left: clamp(24px, 2.6vw, 40px); border-bottom: 1px solid rgba(255,255,255,.12); }
+  .other-case:last-child { padding-right: clamp(24px, 2.6vw, 40px); }
+}
+@media (max-width: 680px) {
+  .work-other { margin-top: 44px; padding-top: 32px; }
+  .other-case { padding: 26px 0 32px !important; }
+  .other-case__q { font-size: clamp(22px, 7vw, 28px); max-width: 100%; }
+  .other-case__summary { max-width: 100%; }
+  .other-case__foot { align-items: flex-start; }
+}
+
+/* ------------------------------------------------------------
+   3 · CASE-STUDY EXTRAS — mibolsillo.html and
+   yellow-brain-research.html only. Same typographic system as
+   .case-block__content; every number uses the display font, every
+   label uses the mono caps the rest of the case study already uses.
+   ------------------------------------------------------------ */
+
+/* Research evidence: three counts plus their sum, inside "the noise". */
+.case-evidence {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 32px;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  max-width: 760px;
+}
+.case-evidence__item {
+  padding: 22px 20px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.case-evidence__item strong {
+  display: block;
+  font: 800 clamp(30px, 3vw, 44px)/1 var(--display);
+  letter-spacing: -.03em;
+}
+.case-evidence__item span {
+  display: block;
+  margin-top: 8px;
+  font: 500 9px/1.4 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.case-evidence__total {
+  grid-column: 1 / -1;
+  padding: 20px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+.case-evidence__total strong {
+  font: 800 clamp(26px, 2.6vw, 36px)/1 var(--display);
+  letter-spacing: -.03em;
+  color: var(--red);
+}
+.case-evidence__total span {
+  font: 500 10px/1.4 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* A short word chain — used for the bet's four verbs and for the
+   3→3→1 impact summary. Same visual language, two different places. */
+.case-flow-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  font: 500 11px/1.5 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.case-flow-chain span { color: var(--bone); }
+.case-flow-chain i { color: var(--red); font-style: normal; }
+
+/* Three numbered principles — a list, not three coloured tiles. */
+.case-principles {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  max-width: 520px;
+}
+.case-principles li {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.case-principles span {
+  font: 500 11px/1 var(--mono);
+  color: var(--red);
+  letter-spacing: .04em;
+}
+.case-principles b {
+  font: 700 15px/1.3 var(--display);
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* A single large metric inside "the impact" — case 05's pattern. */
+.case-impact-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+.case-impact-metric strong {
+  font: 800 clamp(46px, 5vw, 72px)/1 var(--display);
+  letter-spacing: -.04em;
+}
+.case-impact-metric span {
+  font: 500 10px/1.5 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* A second, smaller metric — case 06's validation count. */
+.case-validation {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.case-validation strong {
+  font: 800 clamp(30px, 3vw, 42px)/1 var(--display);
+  letter-spacing: -.03em;
+}
+.case-validation span {
+  font: 500 9px/1.4 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* Roadmap: three abstract stages joined by arrows. No product names,
+   no industry references — numbers and outcomes only. */
+.case-roadmap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: 22px;
+}
+.case-roadmap__stage {
+  padding: 16px 0;
+  border-top: 2px solid var(--red);
+  min-width: 140px;
+}
+.case-roadmap__stage span {
+  display: block;
+  font: 500 10px/1 var(--mono);
+  color: var(--red);
+  letter-spacing: .06em;
+  margin-bottom: 8px;
+}
+.case-roadmap__stage p {
+  margin: 0;
+  font: 700 13px/1.4 var(--display);
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  color: #d5d4cf;
+}
+.case-roadmap__arrow { color: var(--red); font-size: 16px; }
+
+@media (max-width: 680px) {
+  .case-evidence { grid-template-columns: 1fr; max-width: 100%; }
+  .case-evidence__total { grid-column: 1; }
+  .case-flow-chain { font-size: 10.5px; }
+  .case-principles { max-width: 100%; }
+  .case-roadmap { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .case-roadmap__arrow { transform: rotate(90deg); margin-left: 8px; }
+}

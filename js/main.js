@@ -11,6 +11,7 @@
     $$('[data-i18n-html]').forEach(el=>{ const v=t(el.dataset.i18nHtml); if(v!==undefined) el.innerHTML=v; });
     $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===lang)));
     renderProjects();
+    renderOtherWork();
     renderTestimonials();
     bindContacts();
     syncFilmButtons();
@@ -23,14 +24,24 @@
     applyI18n();
   }));
 
+  const mark=(org, base='')=>{
+    const src=C.clientMarks?.[org];
+    return src?`<img class="client-mark" src="${base}${src}" alt="${org}" loading="lazy">`:'';
+  };
+
+  // Flagship cases: unchanged output, filtered to tier !== 'other' so the
+  // two new cases never join this row-based list or its next-case cycle.
+  const flagship=()=>C.projects.filter(p=>(p.tier||'flagship')==='flagship');
+  const otherWork=()=>C.projects.filter(p=>p.tier==='other');
+
   function renderProjects(){
     const root=$('#work-list'); if(!root)return;
-    root.innerHTML=C.projects.map(p=>`
+    root.innerHTML=flagship().map(p=>`
       <article class="project-editorial reveal in">
         <div class="project-editorial__meta">
           <span class="project-editorial__index">${p.number}</span>
           <span>${p.category[lang]}</span>
-          <span>${p.organization} · ${p.year}</span>
+          <span class="project-editorial__org">${mark(p.organization)}${p.organization} · ${p.year}</span>
         </div>
         <div class="project-editorial__main">
           <p class="project-editorial__name">${p.title[lang]}</p>
@@ -46,6 +57,32 @@
           <span>${p.metricLabel[lang]}</span>
           <a href="work/${p.id}.html">${t('work.view')}</a>
         </aside>
+      </article>`).join('');
+  }
+
+  // Second, lighter tier: an editorial two-column composition, not a copy
+  // of the flagship row. No cards, no colour, no logos — text and a
+  // hairline only, so it visibly carries less weight than the four
+  // flagship cases above it.
+  function renderOtherWork(){
+    const root=$('#work-other-list'); if(!root)return;
+    root.innerHTML=otherWork().map(p=>`
+      <article class="other-case reveal in">
+        <div class="other-case__top">
+          <span class="other-case__n">${p.number}</span>
+          <span class="other-case__cat">${p.category[lang]}</span>
+        </div>
+        <p class="other-case__meta">${mark(p.organization)}${p.organization} · ${p.year}</p>
+        <h4 class="other-case__q">${p.question[lang]}</h4>
+        <p class="other-case__summary">${p.summary[lang]}</p>
+        <div class="other-case__foot">
+          <div class="other-case__metric">
+            <strong>${p.metric}</strong>
+            <span>${p.metricLabel[lang]}</span>
+            ${p.microCopy?`<em>${p.microCopy[lang]}</em>`:''}
+          </div>
+          <a class="other-case__cta" href="work/${p.id}.html">${t('work.view')}</a>
+        </div>
       </article>`).join('');
   }
 

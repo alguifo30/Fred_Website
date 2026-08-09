@@ -1,0 +1,261 @@
+/* ============================================================
+   F.RED — TRANSITIONS LAYER  (v25)
+   ------------------------------------------------------------
+   Sits on top of styles.css. Everything here is additive: remove
+   this file and the site still works, it just stops moving.
+
+   Principle: motion carries the argument. A chapter should
+   announce itself, a film should open, a headline should arrive
+   word by word — and none of it should cost the reader a scroll.
+   ============================================================ */
+
+:root {
+  --tx-ease: cubic-bezier(.16, 1, .3, 1);
+  --tx-fast: 320ms;
+  --tx-mid: 700ms;
+  --tx-slow: 1000ms;
+}
+
+/* ------------------------------------------------------------
+   1 · CHAPTER RAIL
+   A thin bar that sticks under the nav for the whole chapter and
+   is pushed out by the next one. It answers "where am I?" without
+   a floating widget and without hijacking the scroll.
+   ------------------------------------------------------------ */
+
+.chapter-rail {
+  position: sticky;
+  top: 72px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 46px;
+  padding-inline: var(--pad);
+  background: rgba(8, 8, 8, .88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+  font: 500 10px/1 var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #8d8d89;
+}
+.chapter-rail__n { color: var(--red); }
+.chapter-rail__name { color: #d8d7d2; }
+.chapter-rail__bar {
+  flex: 1;
+  height: 1px;
+  background: #262626;
+  overflow: hidden;
+}
+/* Fills with the chapter's own progress, so the rail doubles as a
+   "how much of this chapter is left" indicator. */
+.chapter-rail__bar i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--red);
+  transform: scaleX(var(--chapter-p, 0));
+  transform-origin: left;
+}
+.chapter-rail__of { color: #5f5f5c; }
+
+@media (max-width: 980px) {
+  .chapter-rail { top: 64px; height: 40px; gap: 10px; font-size: 9px; }
+}
+
+/* ------------------------------------------------------------
+   2 · FILM ENTRY
+   No shutter, no eye-opening: every film is simply there, full
+   frame, exactly like the hero. The only thing that animates is
+   the overlay copy, which arrives in three short beats so the
+   line is read rather than dumped.
+   ------------------------------------------------------------ */
+
+/* Overlay copy enters; the frame itself never moves. */
+.motion-enhanced .chapter-film .film__label,
+.motion-enhanced .chapter-film .film__copy,
+.motion-enhanced .chapter-film .film__close,
+.motion-enhanced .chapter-film .method-film__stage {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--tx-mid) var(--tx-ease), transform var(--tx-mid) var(--tx-ease);
+}
+.motion-enhanced .chapter-film.in .film__label { opacity: 1; transform: none; transition-delay: .42s; }
+.motion-enhanced .chapter-film.in .film__copy { opacity: 1; transform: none; transition-delay: .56s; }
+.motion-enhanced .chapter-film.in .film__close,
+.motion-enhanced .chapter-film.in .method-film__stage { opacity: 1; transform: none; transition-delay: .74s; }
+
+/* ------------------------------------------------------------
+   3 · WORD-BY-WORD HEADLINES
+   Each word rides up out of its own mask. Replaces the single
+   block wipe: a headline should arrive in the order it is read.
+   ------------------------------------------------------------ */
+
+.tx-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* The mask is exactly one line-height tall, so at line-height < 1 it
+     clips descenders and the tail of a period. Pad the mask, pull the
+     layout back by the same amount. */
+  padding-bottom: .12em;
+  margin-bottom: -.12em;
+}
+.tx-word > i {
+  display: inline-block;
+  font-style: inherit;
+  transform: translateY(108%);
+  transition: transform 900ms var(--tx-ease);
+  will-change: transform;
+}
+.tx-split.in .tx-word > i { transform: none; }
+
+/* The block wipe from styles.css would fight the word masks. */
+.motion-enhanced .display.reveal.tx-split,
+.motion-enhanced .about-copy h3.reveal.tx-split,
+.motion-enhanced .contact h3.reveal.tx-split {
+  clip-path: none;
+  transform: none;
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   4 · CHAPTER MARQUEE
+   A slow band of the chapter's own words between sections. It
+   marks the seam between chapters and keeps the page breathing
+   while nothing else moves.
+   ------------------------------------------------------------ */
+
+.tx-marquee {
+  overflow: hidden;
+  border-block: 1px solid rgba(255, 255, 255, .07);
+  padding-block: 14px;
+  white-space: nowrap;
+  background: #0a0a0a;
+}
+.tx-marquee__track {
+  display: inline-flex;
+  gap: 44px;
+  animation: txSlide 38s linear infinite;
+  will-change: transform;
+}
+.tx-marquee:hover .tx-marquee__track { animation-play-state: paused; }
+.tx-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 44px;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #5f5f5c;
+}
+.tx-marquee__item::after { content: "●"; color: var(--red); font-size: 5px; }
+.tx-marquee__item b { color: #d8d7d2; font-weight: 500; }
+@keyframes txSlide { to { transform: translateX(-50%); } }
+
+/* ------------------------------------------------------------
+   5 · METRIC COUNTERS
+   Tabular figures so the grid never jitters while a number climbs.
+   ------------------------------------------------------------ */
+
+.metric__v { font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------------------
+   6 · WORK ROWS THAT OPEN
+   The list reads compact; the insight unfolds on hover or focus.
+   Nothing is hidden from a reader who cannot hover: on touch and
+   under reduced motion the insight is simply always open.
+   ------------------------------------------------------------ */
+
+@media (hover: hover) and (min-width: 981px) {
+  .motion-enhanced .project-editorial__insight {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows .55s var(--tx-ease), opacity .45s var(--tx-ease), margin .55s var(--tx-ease);
+    margin-top: 0;
+  }
+  .motion-enhanced .project-editorial__insight > * { overflow: hidden; min-height: 0; }
+  .motion-enhanced .project-editorial:hover .project-editorial__insight,
+  .motion-enhanced .project-editorial:focus-within .project-editorial__insight {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 22px;
+  }
+}
+
+/* ------------------------------------------------------------
+   7 · THE BEAT
+   The mark in the header is an equalizer. It answers to scroll
+   velocity, so the brand literally keeps time with the reader.
+   ------------------------------------------------------------ */
+
+.brand .mark rect {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scaleY(var(--beat, 1));
+  transition: transform 220ms var(--tx-ease);
+}
+
+/* ------------------------------------------------------------
+   8 · MAGNETIC CONTROLS
+   ------------------------------------------------------------ */
+
+@media (hover: hover) and (pointer: fine) {
+  [data-magnetic] { transition: transform 320ms var(--tx-ease); }
+}
+
+/* Link sweep on the primary button. */
+.btn--red { position: relative; overflow: hidden; z-index: 0; }
+.btn--red::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #ff3346;
+  transform: translateY(101%);
+  transition: transform .42s var(--tx-ease);
+}
+.btn--red:hover::before { transform: none; }
+
+/* ------------------------------------------------------------
+   9 · REDUCED MOTION
+   Everything renders; it just stops moving.
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-enhanced .chapter-film .film__label,
+  .motion-enhanced .chapter-film .film__copy,
+  .motion-enhanced .chapter-film .film__close,
+  .motion-enhanced .chapter-film .method-film__stage {
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  .tx-word > i { transform: none !important; }
+  .tx-marquee__track { animation: none !important; }
+  .brand .mark rect { transform: none !important; }
+  .motion-enhanced .project-editorial__insight {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+    margin-top: 22px !important;
+  }
+}
+
+
+/* The spine is now a pair of jump controls, not a second chapter label:
+   the sticky rail already names the chapter. */
+.motion-spine { grid-template-columns: 32px auto 32px; }
+@media (max-width: 980px) { .motion-spine { grid-template-columns: 30px auto 30px; } }
+
+/* The pause control lives in the bottom-right of every film, so the
+   closing line has to stop before it rather than run underneath. */
+.film--full .film__close,
+.film--full .method-film__stage { padding-right: 92px; }
+@media (max-width: 680px) {
+  .film--full .film__close,
+  .film--full .method-film__stage { padding-right: 0; padding-bottom: 46px; }
+}

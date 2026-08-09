@@ -26,14 +26,12 @@
     spine.innerHTML = `
       <button class="motion-spine__btn motion-spine__prev" type="button" aria-label="Sección anterior" title="Sección anterior">↑</button>
       <span class="motion-spine__num" aria-live="polite">01 / 05</span>
-      <span class="motion-spine__line" aria-hidden="true"><i></i></span>
-      <span class="motion-spine__name" aria-live="polite">POR QUÉ</span>
       <button class="motion-spine__btn motion-spine__next" type="button" aria-label="Siguiente sección" title="Siguiente sección">↓</button>`;
     document.body.appendChild(spine);
 
     const num = $('.motion-spine__num', spine);
-    const fill = $('.motion-spine__line i', spine);
-    const name = $('.motion-spine__name', spine);
+    const fill = null;
+    const name = null;
     const prev = $('.motion-spine__prev', spine);
     const next = $('.motion-spine__next', spine);
     let currentIndex = 0;
@@ -45,8 +43,6 @@
       const current = sections[idx];
       sections.forEach((section, i) => section.classList.toggle('is-current', i === idx));
       num.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(sections.length).padStart(2, '0')}`;
-      name.textContent = sectionNames()[current.id] || current.id.toUpperCase();
-      fill.style.transform = `scaleX(${(idx + 1) / sections.length})`;
       prev.disabled = idx === 0;
       next.disabled = idx === sections.length - 1;
       $$('.nav__links a').forEach(a => {
