@@ -98,12 +98,40 @@
     $$('.reveal').forEach(x=>io.observe(x));
   }
 
+  const chapterVideos=$$('[data-chapter-video]');
+  chapterVideos.forEach(v=>{
+    v.muted=true;
+    v.defaultMuted=true;
+    v.autoplay=true;
+    v.playsInline=true;
+    v.setAttribute('muted','');
+    v.setAttribute('autoplay','');
+    v.setAttribute('playsinline','');
+    v.setAttribute('webkit-playsinline','');
+  });
+
   const lazyVideos=$$('video[data-lazy-video]');
+  const isNearViewport=v=>{
+    const r=v.getBoundingClientRect();
+    return r.bottom>-160 && r.top<innerHeight+160;
+  };
+  const tryAutoplay=v=>{
+    if(reduced || v.dataset.userPaused==='1')return;
+    const p=v.play();
+    if(p && typeof p.catch==='function')p.catch(()=>{});
+  };
   const loadVideo=v=>{
     if(v.dataset.loaded)return;
+    v.muted=true;
+    v.defaultMuted=true;
+    v.autoplay=true;
+    v.playsInline=true;
     v.src=v.dataset.lazyVideo;
     v.dataset.loaded='1';
     v.load();
+    const resume=()=>{ if(isNearViewport(v)) tryAutoplay(v); };
+    v.addEventListener('loadeddata',resume,{once:true});
+    v.addEventListener('canplay',resume,{once:true});
   };
   if(reduced){
     lazyVideos.forEach(v=>v.removeAttribute('autoplay'));
@@ -118,10 +146,25 @@
       const v=e.target;
       if(e.isIntersecting){
         if(v.dataset.lazyVideo&&!v.dataset.loaded)loadVideo(v);
-        if(v.dataset.userPaused!=='1')v.play().catch(()=>{});
-      }else v.pause();
-    }),{threshold:.18,rootMargin:'120px 0px 120px 0px'});
-    $$('[data-chapter-video]').forEach(v=>playIO.observe(v));
+        tryAutoplay(v);
+      }else if(!document.hidden){
+        v.pause();
+      }
+    }),{threshold:.08,rootMargin:'180px 0px 180px 0px'});
+    chapterVideos.forEach(v=>playIO.observe(v));
+
+    // Safari/iOS can defer a muted autoplay while the page or video is becoming visible.
+    // Retry only for videos currently near the viewport; no user gesture is required.
+    const resumeVisibleVideos=()=>{
+      if(document.hidden)return;
+      chapterVideos.forEach(v=>{
+        if(v.dataset.lazyVideo&&!v.dataset.loaded && isNearViewport(v))loadVideo(v);
+        if(isNearViewport(v))tryAutoplay(v);
+      });
+    };
+    addEventListener('pageshow',resumeVisibleVideos,{passive:true});
+    document.addEventListener('visibilitychange',resumeVisibleVideos);
+    addEventListener('touchstart',resumeVisibleVideos,{once:true,passive:true});
   }
 
   function syncFilmButton(btn){

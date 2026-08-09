@@ -1,21 +1,10 @@
-# F.RED — Portfolio
+# F.RED Portfolio v23 — Mobile Cinematic + Autoplay
 
-Versión lista para publicar en GitHub Pages.
-
-## Publicación rápida
-1. Sube **todo el contenido de esta carpeta** a la raíz del repositorio.
-2. Verifica que `index.html` quede en la raíz.
-3. En GitHub: **Settings → Pages → Deploy from a branch → main → /(root)**.
-4. Guarda y espera a que GitHub Pages publique el sitio.
-
-## Estructura principal
-- `index.html` — Home
-- `css/` — estilos
-- `js/` — lógica, idioma, animaciones y navegación
-- `assets/` — videos, posters, imagen About y favicon
-- `work/` — páginas de los 4 casos
-- `robots.txt` y `sitemap.xml` — SEO
-- `.nojekyll` — evita procesamiento Jekyll
-
-## Importante
-No cambies los nombres ni la ubicación de las carpetas `assets`, `css`, `js` o `work`, porque las rutas internas dependen de esa estructura.
+Mobile-specific refinements:
+- Presence film is shown first on phones, with editorial copy below it so Alfredo's face remains visible.
+- Chapter films 02–05 use a wider 16:10 mobile composition to preserve more of the original footage.
+- The 01/05 chapter dock is removed on phones because it covered content; it remains available on tablet/desktop.
+- Film pause controls are hidden on phones for a cleaner autoplay-first experience.
+- All five films are marked autoplay + muted + playsinline + webkit-playsinline.
+- Lazy-loaded films retry muted autoplay when entering/returning to the viewport, including Safari/iOS visibility changes.
+- Reduced-motion preferences are still respected.

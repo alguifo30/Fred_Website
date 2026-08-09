@@ -2017,3 +2017,131 @@ section[data-main-section],#about-profile{scroll-margin-top:78px}
 /* QA safety: long words/numeric strings never create horizontal overflow. */
 .project-editorial__question,.people-title,.contact h3,.metric__v,.cap-title,.display{overflow-wrap:normal;word-break:normal}
 body{overflow-x:hidden!important}
+
+/* =========================================================
+   F.RED v23 — MOBILE CINEMATIC + AUTOPLAY POLISH
+   Mobile is treated as a distinct composition: footage first,
+   copy second. The chapter navigator is removed on phones so
+   it never covers content.
+   ========================================================= */
+
+@media (max-width:680px){
+  /* HERO: show the Presence film clearly before the editorial copy. */
+  .hero--cinematic{
+    display:block!important;
+    min-height:0!important;
+    padding:75vw 0 0!important;
+    background:#080808!important;
+    overflow:hidden!important;
+  }
+  .hero__video,.hero__shade{
+    top:0!important;
+    bottom:auto!important;
+    height:75vw!important;
+    max-height:330px!important;
+  }
+  .hero__video{
+    width:100%!important;
+    object-fit:cover!important;
+    object-position:50% 47%!important;
+    transform:none!important;
+    filter:saturate(.94) contrast(1.025) brightness(.94)!important;
+  }
+  .hero__shade{
+    background:
+      linear-gradient(0deg,rgba(8,8,8,.60) 0%,rgba(8,8,8,.05) 38%,rgba(8,8,8,.04) 76%,rgba(8,8,8,.16) 100%)!important;
+  }
+  .hero__cinematic-grid{
+    position:relative!important;
+    z-index:2!important;
+    display:block!important;
+    padding:24px var(--pad) 38px!important;
+    background:#080808!important;
+  }
+  .hero--cinematic .hero__meta{
+    width:100%!important;
+    max-width:none!important;
+    gap:11px!important;
+  }
+  .hero__film-label{margin:0 0 2px!important;color:#d8d7d2!important}
+  .hero--cinematic .display-xl{
+    margin:2px 0 4px!important;
+    max-width:100%!important;
+    font-size:clamp(40px,11.8vw,54px)!important;
+    line-height:.91!important;
+    letter-spacing:-.045em!important;
+    text-shadow:none!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+  }
+  .hero--cinematic .hero__sub{
+    max-width:34ch!important;
+    font-size:15.5px!important;
+    line-height:1.48!important;
+    color:#d1d0cb!important;
+    text-shadow:none!important;
+  }
+  .hero--cinematic .hero__tagline{margin-top:3px!important;font-size:9.5px!important}
+  .hero__actions{margin-top:8px!important}
+  .hero__actions .btn{
+    width:100%!important;
+    min-height:48px!important;
+    justify-content:center!important;
+  }
+  /* The autoplay experience is primary on phones; keep the film visually clean. */
+  .film-toggle{display:none!important}
+
+  /* Films 02–05: landscape-ish canvas to preserve more of the original 16:9 frame. */
+  .chapter-film--clarity,.chapter-film--work,.chapter-film--impact,.chapter-film--people{
+    aspect-ratio:16/10!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+  }
+  .chapter-film video{
+    object-fit:cover!important;
+    transform:none!important;
+  }
+  .chapter-film--clarity video{object-position:56% 48%!important}
+  .chapter-film--work video{object-position:53% 48%!important}
+  .chapter-film--impact video{object-position:54% 47%!important}
+  .chapter-film--people video{object-position:62% 48%!important}
+  .chapter-film .film__overlay{padding:18px 18px 22px!important}
+  .chapter-film .film__label{top:18px!important;left:18px!important;right:18px!important;font-size:7.5px!important}
+  .chapter-film .film__copy{
+    font-size:clamp(27px,7.7vw,36px)!important;
+    line-height:.91!important;
+    max-width:7.5ch!important;
+    margin-bottom:8px!important;
+  }
+  .chapter-film .film__close,.chapter-film .method-film__stage{
+    max-width:56vw!important;
+    font-size:7px!important;
+    line-height:1.45!important;
+  }
+
+  /* The 01/05 dock is useful on desktop/tablet but obstructive on phones. */
+  .motion-spine{display:none!important}
+  .footer{padding-bottom:calc(34px + env(safe-area-inset-bottom))!important}
+}
+
+/* Very small phones: preserve comfortable side margins and avoid long-word clipping. */
+@media (max-width:390px){
+  .hero--cinematic{padding-top:78vw!important}
+  .hero__video,.hero__shade{height:78vw!important}
+  .hero--cinematic .display-xl{font-size:clamp(38px,11.4vw,47px)!important}
+  .chapter-film .film__copy{font-size:clamp(25px,7.4vw,32px)!important}
+}
+
+/* Tablet chapter navigator stays useful, but lives at the right edge rather than over content. */
+@media (min-width:681px) and (max-width:900px){
+  .motion-spine{
+    position:fixed!important;
+    left:auto!important;
+    right:14px!important;
+    bottom:18px!important;
+    transform:none!important;
+    width:auto!important;
+    max-width:290px!important;
+  }
+}
