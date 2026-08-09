@@ -200,10 +200,13 @@
     chapterVideos.forEach(v=>{ if(isNearViewport(v)) tryAutoplay(v); });
   };
 
-  // Immediate retries cover normal Safari/Chrome muted autoplay.
+  // Immediate retries cover normal Safari/Chrome muted autoplay. iOS
+  // sometimes rejects the very first attempt while the video is still
+  // buffering, so this keeps trying for a few seconds instead of giving
+  // up after one pass — each call is a no-op once playback has started.
   requestAnimationFrame(resumeVisibleVideos);
-  setTimeout(resumeVisibleVideos,80);
-  setTimeout(resumeVisibleVideos,450);
+  [80,300,600,1000,1800,2800,4000].forEach(ms=>setTimeout(resumeVisibleVideos,ms));
+  document.addEventListener('DOMContentLoaded',resumeVisibleVideos,{passive:true});
   addEventListener('load',resumeVisibleVideos,{passive:true});
   addEventListener('pageshow',resumeVisibleVideos,{passive:true});
   addEventListener('focus',resumeVisibleVideos,{passive:true});

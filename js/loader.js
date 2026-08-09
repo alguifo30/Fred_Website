@@ -54,7 +54,10 @@
     document.body.classList.remove('is-loading');
     document.documentElement.classList.add('motion-ready');
 
-    // Start the Presence film at its first frame when the experience is revealed.
+    // Start the Presence film at its first frame when the experience is
+    // revealed. iOS occasionally rejects this first attempt while the
+    // file is still buffering — two quick, silent retries cost nothing
+    // and catch the cases the single attempt used to miss.
     if (heroVideo) {
       heroVideo.muted = true;
       heroVideo.defaultMuted = true;
@@ -65,7 +68,12 @@
       heroVideo.setAttribute('playsinline','');
       heroVideo.setAttribute('webkit-playsinline','');
       try { heroVideo.currentTime = 0; } catch (_) {}
-      heroVideo.play().catch(() => {});
+      const attempt = () => heroVideo.play();
+      attempt().catch(() => {
+        setTimeout(() => attempt().catch(() => {
+          setTimeout(() => attempt().catch(() => {}), 700);
+        }), 250);
+      });
     }
 
     window.dispatchEvent(new CustomEvent('fred:loaded'));

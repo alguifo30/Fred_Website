@@ -148,6 +148,19 @@ html { scroll-padding-top: 130px; }
   align-items: center;
   gap: 8px;
 }
+
+/* On mobile, styles.css turns .project-editorial__meta into a wrapped
+   row (index + category + org all inline), which crushes the client
+   mark and organisation into the middle of a run-on line. Forcing the
+   org span to its own line makes it read as a subtitle under the
+   category, matching the desktop hierarchy. flex-basis:100% is enough
+   to win here since nothing else sets it on this element. */
+@media (max-width: 680px) {
+  .project-editorial__org {
+    flex-basis: 100%;
+    margin-top: 4px;
+  }
+}
 .case-client {
   display: inline-flex;
   align-items: center;

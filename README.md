@@ -251,3 +251,50 @@ flagship pages byte-identical to the prior version.
 Also checked separately: tablet portrait (768) and tablet landscape
 (1024) for the new Other Work grid — both clean, both correctly falling
 back to the site's existing 980px breakpoint.
+
+---
+
+# v25.3 — mobile card layout fix + autoplay hardening
+
+## Fixed: client logo overlapping the category line on mobile
+
+Below 680px, `styles.css` turns each case card's meta line into a wrapped
+row (`flex-direction:row; flex-wrap:wrap`), so index, category, logo and
+organisation all fought for the same line and wrapped wherever the text
+happened to break — the disordered look in your screenshot.
+
+Fix, in `css/refine.css`: the organisation span now gets `flex-basis:100%`
+on mobile, which forces it onto its own line inside the same flex row
+without touching `styles.css` at all. Result: index + category on line
+one, `[logo] ORGANIZATION · YEAR` as a clear subtitle on line two — on
+all four flagship cards, both Other Work cards, and every case study
+hero. Checked at 390px on all seven pages.
+
+## Strengthened: hero video autoplay
+
+Two independent autoplay attempts already existed (`loader.js` fires once
+when the intro finishes; `main.js` retries repeatedly via
+IntersectionObserver and several page-lifecycle events). This pass:
+
+- `loader.js`'s single attempt now retries twice more (at +250ms and
+  +700ms) if the browser rejects the first `play()` call instead of
+  giving up silently.
+- `main.js`'s retry schedule went from 3 attempts inside the first
+  450ms to 8 attempts spread across the first 4 seconds, and now also
+  fires on `DOMContentLoaded` in addition to the existing triggers.
+
+**Read this part honestly, though:** if the video you saw was showing
+iOS's own centered play icon, that is very likely Apple's autoplay
+policy blocking the very first play() call on a fresh page load — a
+device/OS-level decision, not a bug in this code. No amount of retrying
+from JavaScript can force it; Safari clears the block itself the moment
+the visitor makes any first tap on the page, which is also v24's original
+`unlockMedia()` behaviour (still in place, listens for `touchstart`,
+`pointerdown` and `click` anywhere on the page). What this pass adds is
+a wider window and more attempts for the cases where a retry genuinely
+would have worked — it doesn't override a hard OS block.
+
+One thing worth checking on your end: your screenshot's logo positioning
+already showed the client-mark feature, which means the live site was at
+least on the version from two passes ago. If the video issue looks
+identical after deploying this one, it's the iOS policy, not stale files.
