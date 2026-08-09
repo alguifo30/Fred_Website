@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alguifo30.github.io/Portfolio_Alfredo_Aguirre/sitemap.xml
