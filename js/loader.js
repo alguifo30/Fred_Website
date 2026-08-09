@@ -55,7 +55,15 @@
     document.documentElement.classList.add('motion-ready');
 
     // Start the Presence film at its first frame when the experience is revealed.
-    if (heroVideo && !reduced) {
+    if (heroVideo) {
+      heroVideo.muted = true;
+      heroVideo.defaultMuted = true;
+      heroVideo.autoplay = true;
+      heroVideo.playsInline = true;
+      heroVideo.setAttribute('muted','');
+      heroVideo.setAttribute('autoplay','');
+      heroVideo.setAttribute('playsinline','');
+      heroVideo.setAttribute('webkit-playsinline','');
       try { heroVideo.currentTime = 0; } catch (_) {}
       heroVideo.play().catch(() => {});
     }

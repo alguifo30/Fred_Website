@@ -98,74 +98,108 @@
     $$('.reveal').forEach(x=>io.observe(x));
   }
 
+  /* ---------------------------------------------------------
+     Media / autoplay
+     iOS Safari requires muted + playsinline before playback.
+     Low Power Mode can still block true autoplay by browser policy;
+     the first touch anywhere on the page then unlocks the media.
+     --------------------------------------------------------- */
   const chapterVideos=$$('[data-chapter-video]');
-  chapterVideos.forEach(v=>{
+  const isNearViewport=v=>{
+    const r=v.getBoundingClientRect();
+    return r.bottom>-180 && r.top<innerHeight+180;
+  };
+  const primeVideo=v=>{
+    v.controls=false;
     v.muted=true;
     v.defaultMuted=true;
+    v.volume=0;
     v.autoplay=true;
     v.playsInline=true;
     v.setAttribute('muted','');
     v.setAttribute('autoplay','');
     v.setAttribute('playsinline','');
     v.setAttribute('webkit-playsinline','');
-  });
-
-  const lazyVideos=$$('video[data-lazy-video]');
-  const isNearViewport=v=>{
-    const r=v.getBoundingClientRect();
-    return r.bottom>-160 && r.top<innerHeight+160;
+    v.setAttribute('disablepictureinpicture','');
+    v.setAttribute('controlslist','nodownload noplaybackrate noremoteplayback');
+    v.removeAttribute('controls');
   };
   const tryAutoplay=v=>{
-    if(reduced || v.dataset.userPaused==='1')return;
-    const p=v.play();
-    if(p && typeof p.catch==='function')p.catch(()=>{});
+    if(!v || v.dataset.userPaused==='1') return Promise.resolve(false);
+    primeVideo(v);
+    let p;
+    try{ p=v.play(); }catch(_){ return Promise.resolve(false); }
+    if(!p || typeof p.then!=='function') return Promise.resolve(!v.paused);
+    return p.then(()=>{
+      v.dataset.autoplayBlocked='0';
+      return true;
+    }).catch(()=>{
+      v.dataset.autoplayBlocked='1';
+      return false;
+    });
   };
-  const loadVideo=v=>{
-    if(v.dataset.loaded)return;
-    v.muted=true;
-    v.defaultMuted=true;
-    v.autoplay=true;
-    v.playsInline=true;
-    v.src=v.dataset.lazyVideo;
-    v.dataset.loaded='1';
-    v.load();
-    const resume=()=>{ if(isNearViewport(v)) tryAutoplay(v); };
-    v.addEventListener('loadeddata',resume,{once:true});
-    v.addEventListener('canplay',resume,{once:true});
+
+  chapterVideos.forEach(v=>{
+    primeVideo(v);
+    const retry=()=>{ if(isNearViewport(v) && !document.hidden) tryAutoplay(v); };
+    v.addEventListener('loadedmetadata',retry,{passive:true});
+    v.addEventListener('loadeddata',retry,{passive:true});
+    v.addEventListener('canplay',retry,{passive:true});
+  });
+
+  const playIO=new IntersectionObserver(entries=>entries.forEach(e=>{
+    const v=e.target;
+    if(e.isIntersecting){
+      tryAutoplay(v);
+    }else if(!document.hidden && v.dataset.userPaused!=='1'){
+      // Keep only nearby films running so mobile Safari uses less battery/data.
+      v.pause();
+    }
+  }),{threshold:.04,rootMargin:'200px 0px 200px 0px'});
+  chapterVideos.forEach(v=>playIO.observe(v));
+
+  const resumeVisibleVideos=()=>{
+    if(document.hidden)return;
+    chapterVideos.forEach(v=>{ if(isNearViewport(v)) tryAutoplay(v); });
   };
-  if(reduced){
-    lazyVideos.forEach(v=>v.removeAttribute('autoplay'));
-    $$('video[autoplay]').forEach(v=>{v.pause();v.removeAttribute('autoplay');});
-  } else {
-    const preloadIO=new IntersectionObserver(es=>es.forEach(e=>{
-      if(e.isIntersecting){loadVideo(e.target);preloadIO.unobserve(e.target);}
-    }),{rootMargin:'420px 0px'});
-    lazyVideos.forEach(v=>preloadIO.observe(v));
 
-    const playIO=new IntersectionObserver(es=>es.forEach(e=>{
-      const v=e.target;
-      if(e.isIntersecting){
-        if(v.dataset.lazyVideo&&!v.dataset.loaded)loadVideo(v);
-        tryAutoplay(v);
-      }else if(!document.hidden){
-        v.pause();
-      }
-    }),{threshold:.08,rootMargin:'180px 0px 180px 0px'});
-    chapterVideos.forEach(v=>playIO.observe(v));
+  // Immediate retries cover normal Safari/Chrome muted autoplay.
+  requestAnimationFrame(resumeVisibleVideos);
+  setTimeout(resumeVisibleVideos,80);
+  setTimeout(resumeVisibleVideos,450);
+  addEventListener('load',resumeVisibleVideos,{passive:true});
+  addEventListener('pageshow',resumeVisibleVideos,{passive:true});
+  addEventListener('focus',resumeVisibleVideos,{passive:true});
+  document.addEventListener('visibilitychange',resumeVisibleVideos);
+  addEventListener('fred:loaded',resumeVisibleVideos,{passive:true});
 
-    // Safari/iOS can defer a muted autoplay while the page or video is becoming visible.
-    // Retry only for videos currently near the viewport; no user gesture is required.
-    const resumeVisibleVideos=()=>{
-      if(document.hidden)return;
-      chapterVideos.forEach(v=>{
-        if(v.dataset.lazyVideo&&!v.dataset.loaded && isNearViewport(v))loadVideo(v);
-        if(isNearViewport(v))tryAutoplay(v);
-      });
-    };
-    addEventListener('pageshow',resumeVisibleVideos,{passive:true});
-    document.addEventListener('visibilitychange',resumeVisibleVideos);
-    addEventListener('touchstart',resumeVisibleVideos,{once:true,passive:true});
-  }
+  // iPhone Low Power Mode can legally block true autoplay. Safari then needs
+  // one user activation. Any first touch/click on the page unlocks the films;
+  // the visitor never has to press the native Play icon on each video.
+  let mediaUnlocked=false;
+  const unlockMedia=()=>{
+    if(mediaUnlocked)return;
+    mediaUnlocked=true;
+    const promises=chapterVideos.map(v=>{
+      primeVideo(v);
+      let p;
+      try{ p=v.play(); }catch(_){ return Promise.resolve(); }
+      if(!p || typeof p.then!=='function')return Promise.resolve();
+      return p.then(()=>{
+        v.dataset.autoplayBlocked='0';
+        if(!isNearViewport(v)){
+          setTimeout(()=>{ if(!isNearViewport(v) && v.dataset.userPaused!=='1')v.pause(); },90);
+        }
+      }).catch(()=>{});
+    });
+    Promise.allSettled(promises).then(resumeVisibleVideos);
+    document.removeEventListener('touchstart',unlockMedia,true);
+    document.removeEventListener('pointerdown',unlockMedia,true);
+    document.removeEventListener('click',unlockMedia,true);
+  };
+  document.addEventListener('touchstart',unlockMedia,{capture:true,passive:true});
+  document.addEventListener('pointerdown',unlockMedia,{capture:true,passive:true});
+  document.addEventListener('click',unlockMedia,{capture:true,passive:true});
 
   function syncFilmButton(btn){
     const host=btn.closest('.film,.hero'); const v=host?.querySelector('video'); if(!v)return;

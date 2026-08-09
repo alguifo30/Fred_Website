@@ -1,10 +1,10 @@
-# F.RED Portfolio v23 — Mobile Cinematic + Autoplay
+# F.RED Portfolio v24 — iOS Autoplay Hardened
 
-Mobile-specific refinements:
-- Presence film is shown first on phones, with editorial copy below it so Alfredo's face remains visible.
-- Chapter films 02–05 use a wider 16:10 mobile composition to preserve more of the original footage.
-- The 01/05 chapter dock is removed on phones because it covered content; it remains available on tablet/desktop.
-- Film pause controls are hidden on phones for a cleaner autoplay-first experience.
-- All five films are marked autoplay + muted + playsinline + webkit-playsinline.
-- Lazy-loaded films retry muted autoplay when entering/returning to the viewport, including Safari/iOS visibility changes.
-- Reduced-motion preferences are still respected.
+- All 5 films use muted, looped, inline autoplay markup with direct MP4 sources.
+- Safari/iOS autoplay is retried on load, pageshow, focus, visibility and viewport entry.
+- Native iOS play overlays are suppressed for the cinematic films.
+- If iPhone Low Power Mode blocks autoplay by browser policy, the first touch anywhere on the page unlocks the films; users do not need to press Play on each video.
+- Posters are included for a clean first frame while media initializes.
+- Responsive behavior from v23 is preserved.
+
+Important: iOS Low Power Mode can prevent true no-interaction video autoplay. This is an operating-system/browser policy and cannot be bypassed by website code.

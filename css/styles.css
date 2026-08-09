@@ -2145,3 +2145,34 @@ body{overflow-x:hidden!important}
     max-width:290px!important;
   }
 }
+
+/* =========================================================
+   F.RED v24 — iOS AUTOPLAY HARDENING
+   Hide Safari's native start-play overlay. The portfolio uses
+   muted inline autoplay; if iOS Low Power Mode blocks it, the
+   first interaction anywhere unlocks playback via JS.
+   ========================================================= */
+.hero__video,
+.chapter-film video{
+  -webkit-appearance:none;
+  pointer-events:none;
+}
+.hero__video::-webkit-media-controls,
+.chapter-film video::-webkit-media-controls,
+.hero__video::-webkit-media-controls-enclosure,
+.chapter-film video::-webkit-media-controls-enclosure,
+.hero__video::-webkit-media-controls-panel,
+.chapter-film video::-webkit-media-controls-panel,
+.hero__video::-webkit-media-controls-start-playback-button,
+.chapter-film video::-webkit-media-controls-start-playback-button,
+.hero__video::-webkit-media-controls-overlay-play-button,
+.chapter-film video::-webkit-media-controls-overlay-play-button,
+.hero__video::-webkit-media-controls-play-button,
+.chapter-film video::-webkit-media-controls-play-button{
+  display:none!important;
+  opacity:0!important;
+  -webkit-appearance:none!important;
+}
+@media (max-width:680px){
+  .hero__video,.chapter-film video{pointer-events:none!important}
+}
