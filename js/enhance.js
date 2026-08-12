@@ -136,25 +136,48 @@
     };
     prime();
 
-    if (reduced || !('IntersectionObserver' in window)) return;
+    // Loading and the play attempts below are core content, not
+    // decorative motion, so they run the same way under
+    // prefers-reduced-motion: reduce — only the scroll-linked parallax
+    // in bedParallax() is gated by that preference. What IS gated here
+    // is purely presentational: skip the visibility-based load/pause
+    // cycle when there's no IntersectionObserver, since without it we
+    // can't tell whether the video is on screen.
+    const attempt = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    const ensureLoaded = () => { if (!v.dataset.loaded) { v.load(); v.dataset.loaded = '1'; } };
+
+    ensureLoaded();
+
+    // iOS sometimes rejects play() while too little of the file has
+    // buffered yet, independent of any autoplay policy — a later
+    // attempt once more data is available can succeed with no retry
+    // logic needed at all. Each event is a legitimate, separate reason
+    // to try again; none of them fire on a false promise.
+    ['loadeddata', 'canplay', 'canplaythrough', 'loadedmetadata'].forEach(ev =>
+      v.addEventListener(ev, attempt, { once: true }));
+
+    // A handful of short-interval retries covers the case where the
+    // browser's own autoplay heuristic simply needed a second pass —
+    // observed in practice to succeed even when the very first
+    // programmatic attempt on page load did not.
+    [0, 150, 400, 900, 1800].forEach(ms => setTimeout(attempt, ms));
+
+    // Any first tap anywhere on the page clears a genuine iOS autoplay
+    // block. This listener is intentionally never gated by reduced
+    // motion or by IntersectionObserver support — it's the one
+    // mechanism guaranteed to work regardless of either.
+    ['touchstart', 'pointerdown', 'click'].forEach(ev =>
+      document.addEventListener(ev, attempt, { once: true, passive: true, capture: true }));
+
+    if (!('IntersectionObserver' in window)) { attempt(); return; }
 
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          if (!v.dataset.loaded) { v.load(); v.dataset.loaded = '1'; }
-          const p = v.play();
-          if (p && p.catch) p.catch(() => {});
-        } else if (!v.paused) {
-          v.pause();
-        }
+        if (e.isIntersecting) { ensureLoaded(); attempt(); }
+        else if (!v.paused) { v.pause(); }
       });
     }, { threshold: 0.15 });
     io.observe(v);
-
-    // iOS can refuse the first play(); any first tap clears the block.
-    ['touchstart', 'pointerdown'].forEach(ev =>
-      document.addEventListener(ev, () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); },
-        { once: true, passive: true, capture: true }));
   }
 
   /* ---------------------------------------------------------

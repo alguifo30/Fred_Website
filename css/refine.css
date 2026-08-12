@@ -633,18 +633,32 @@
 .tool-band.in .tool-group:nth-child(3) { transition-delay: 180ms; }
 .tool-band.in .tool-group:nth-child(4) { transition-delay: 270ms; }
 
-@media (max-width: 900px) {
+@media (max-width: 900px) and (min-width: 561px) {
   .tool-band__groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* 2×2 grid: odd items sit left in their row (flush left, divider on
      their right), even items sit right (flush right, no divider) — one
-     centered divider per row instead of the desktop's leftover spacing. */
+     centered divider per row instead of the desktop's leftover spacing.
+     Scoped to a min-width too: :nth-child gives these more specificity
+     than the plain .tool-group selector in the 560px block below, so
+     without the floor here they'd keep winning underneath it and the
+     single-column layout would inherit this range's left/right offsets
+     — the alternating indent in the screenshot. */
   .tool-group:nth-child(odd) { padding-left: 0; padding-right: 24px; border-right: 1px solid var(--line); }
   .tool-group:nth-child(even) { padding-left: 24px; padding-right: 0; border-right: 0; }
   .tool-group:nth-child(1), .tool-group:nth-child(2) { border-bottom: 1px solid var(--line); padding-bottom: 18px; }
 }
 @media (max-width: 560px) {
   .tool-band__groups { grid-template-columns: 1fr; }
-  .tool-group { border-right: 0 !important; border-bottom: 1px solid var(--line); padding: 16px 0; }
+  /* !important as a second, independent safety net: every group flush
+     left/right and identical, regardless of odd/even position. */
+  .tool-group {
+    border-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid var(--line);
+  }
   .tool-group:last-child { border-bottom: 0; }
 }
 

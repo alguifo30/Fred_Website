@@ -356,3 +356,69 @@ independent of any of the content trims made along the way.
 the tool band's 2-column fallback and the video's mode switch both
 live): zero overflow, zero console errors. Checked tablet at 768×1024
 specifically for the new contained video treatment.
+
+---
+
+# v32 — tool band alignment bug, video autoplay hardening
+
+## 1 · Tool band: the actual bug behind the zig-zag
+
+Confirmed on your device: NEGOCIO/TECNOLOGÍA sat flush left while
+EXPERIENCIA/NARRATIVA sat indented — an alternating pattern, not random.
+
+The cause: last pass's fix used `.tool-group:nth-child(odd)` /
+`:nth-child(even)` inside a `@media (max-width: 900px)` block (no floor)
+to build a 2-column layout. That block never stops applying as the
+screen keeps narrowing — it's still active at 375px. The single-column
+reset at `@media (max-width: 560px)` uses the plain `.tool-group`
+selector, but a `:nth-child()` selector carries more specificity than a
+plain class, so the 900px block's left/right offsets kept winning
+underneath the "reset," regardless of which one came later in the file.
+That's the exact zig-zag in your screenshot.
+
+Fixed two ways at once: the 900px block is now range-scoped to
+`(min-width: 561px) and (max-width: 900px)`, so it stops applying the
+instant the single-column layout takes over — and the 560px reset now
+carries `!important` on every offset as a second, independent
+safety net. Confirmed clean at 560px and 561px specifically, either
+side of the boundary, plus the full sweep.
+
+## 2 · Video autoplay — a real bug fixed, plus what your screenshot shows
+
+**The bug, fixed:** `enhance.js` had `if (reduced || !('IntersectionObserver' in window)) return;`
+at the top of the function that loads and plays every `.film-bed`
+video — reduced-motion was gating not just the parallax (correct) but
+the load, the play attempt, and the tap-to-unlock listener too
+(wrong). A visitor with "Reduce Motion" on in iOS Accessibility got
+none of those for the contact-page film. Rewritten so only the
+decorative parallax stays gated by that preference; loading and
+playback attempts now run unconditionally, with five retries on a
+staggered schedule, four separate buffering events each triggering
+another attempt, and a permanent first-tap listener with no
+dependency on IntersectionObserver support.
+
+The hero video (section 01) already had its own separate, fairly
+robust retry system in `main.js` — untouched, still there.
+
+**What I think your screenshot is actually showing:** the status bar
+reads "◀ WhatsApp" — that page opened inside WhatsApp's own in-app
+browser, not Safari itself. In-app browsers (WhatsApp, Instagram,
+Messenger, TikTok) commonly enforce their own, stricter autoplay
+policy at the WebView level, one that a page's own HTML/JS has no way
+to see or override — this is a limitation of the embedding app, not
+of the code running inside it.
+
+**The way to tell them apart:** open the same link directly in Safari
+(in WhatsApp, tap the ••• menu in the in-app browser and choose "Open
+in Safari" / "Open in Browser") and reload. If it autoplays cleanly
+there, the fixes above did their job and the in-app browser was the
+actual cause. If it still shows the tap-to-play button in real Safari
+too, that's a genuine remaining issue worth another look — but the two
+have very different fixes, and only one of them is something code can
+touch.
+
+## QA
+
+77 combinations this pass (7 pages × 11 widths, including 560px and
+561px on either side of the tool-band boundary that broke last time):
+zero overflow, zero console errors.
