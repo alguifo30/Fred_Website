@@ -3,248 +3,125 @@ window.FRED_CONTENT = {
   clientMarks:{
     'INTERBANK':'assets/brand/clients/interbank.png',
     'RIMAC SEGUROS':'assets/brand/clients/rimac.png',
-    'MiBolsillo':'assets/brand/clients/mibolsillo.png',
-    'Yellow Brain':'assets/brand/clients/yellow-brain.png'
+    'MIBOLSILLO':'assets/brand/clients/mibolsillo.png',
+    'YELLOW BRAIN':'assets/brand/clients/yellow-brain.png'
   },
   contact:{
     linkedin:'https://linkedin.com/in/alfredo-aguirre-fonseca-49946932',
-    email:'',
-    cv:''
+    email:'',cv:''
   },
   projects:[
     {
-      id:'genai-knowledge', number:'01',
+      id:'genai-knowledge', number:'01', flagship:true,
       category:{es:'IA GENERATIVA · BANCA',en:'GENAI · BANKING'}, organization:'INTERBANK', year:'2023',
       title:{es:'Asistente Inteligente para Asesores',en:'Intelligent Assistant for Advisors'},
       metric:'97%', metricLabel:{es:'menos tiempo de consulta',en:'less consultation time'},
-      question:{
-        es:'¿Y SI ENCONTRAR LA RESPUESTA CORRECTA TOMARA SEGUNDOS EN VEZ DE MINUTOS?',
-        en:'WHAT IF FINDING THE RIGHT ANSWER TOOK SECONDS INSTEAD OF MINUTES?'
-      },
-      summary:{
-        es:'Convertí conocimiento documental disperso en una experiencia conversacional que devuelve la respuesta correcta durante la llamada, sin sacar al asesor de su flujo.',
-        en:'I turned distributed documentary knowledge into a conversational experience that returns the right answer during the call without taking the advisor out of their flow.'
-      },
-      tags:['Azure OpenAI','AI Search','SharePoint'],
+      question:{es:'¿Y si encontrar la respuesta correcta tomara segundos en vez de minutos?',en:'What if finding the right answer took seconds instead of minutes?'},
+      summary:{es:'Convertí conocimiento disperso en una experiencia conversacional que entrega respuestas útiles durante la atención.',en:'I turned distributed knowledge into a conversational experience that delivers useful answers during service.'},
       noise:{es:'El conocimiento existía, pero estaba distribuido y encontrar la respuesta correcta consumía tiempo durante la atención.',en:'The knowledge existed, but it was distributed and finding the right answer consumed time during service.'},
       insight:{es:'El problema no era falta de información. Era acceso al conocimiento en el momento exacto en que hacía falta.',en:'The problem was not missing information. It was access to knowledge at the exact moment it was needed.'},
       bet:{es:'Reducir la distancia entre una pregunta y la respuesta útil mediante una experiencia conversacional apoyada por IA generativa.',en:'Reduce the distance between a question and a useful answer through a conversational experience powered by generative AI.'},
-      build:['Azure OpenAI','AI Search','SharePoint','Knowledge Architecture','Prompt Design','Testing'],
+      build:['Knowledge Architecture','Conversational UX','Generative AI','AI Search','Prompt Design','Testing'],
       impact:{es:'97% menos tiempo de consulta.',en:'97% less consultation time.'},
       learning:{es:'La IA crea valor cuando desaparece detrás de una mejor experiencia.',en:'AI creates value when it disappears behind a better experience.'}
     },
     {
-      id:'process-redesign', number:'02',
-      category:{es:'DISEÑO DE SERVICIO · SEGUROS',en:'SERVICE DESIGN · INSURANCE'}, organization:'RIMAC SEGUROS', year:'2020',
+      id:'process-redesign', number:'02', flagship:true,
+      category:{es:'SERVICE DESIGN · SEGUROS',en:'SERVICE DESIGN · INSURANCE'}, organization:'RIMAC SEGUROS', year:'2020',
       title:{es:'Flujo Digital de Pólizas End-to-End',en:'End-to-End Digital Policy Flow'},
-      metric:'99%+', metricLabel:{es:'menos tiempo operativo',en:'less operational time'},
-      question:{es:'¿Y SI UN PROCESO DE DÍAS PUDIERA RESOLVERSE EN MINUTOS?',en:'WHAT IF A PROCESS THAT TOOK DAYS COULD BE COMPLETED IN MINUTES?'},
-      summary:{es:'Rediseñé de raíz el proceso de emisión de pólizas, eliminando handoffs manuales y reduciendo el ciclo de días a minutos.',en:'I redesigned the policy issuance process end-to-end, removing manual handoffs and reducing the cycle from days to minutes.'},
-      tags:['Service Design','Process Mining','APIs'],
+      metric:'3 DÍAS → 10 MIN', metricLabel:{es:'ciclo operativo',en:'operational cycle'},
+      question:{es:'¿Y si un proceso de tres días pudiera resolverse en minutos?',en:'What if a three-day process could be completed in minutes?'},
+      summary:{es:'Rediseñé de raíz un proceso fragmentado, eliminando esperas y handoffs antes de digitalizar la experiencia.',en:'I redesigned a fragmented process end-to-end, removing waits and handoffs before digitizing the experience.'},
       noise:{es:'Esperas, pasos manuales y múltiples puntos de fricción extendían el tiempo total del proceso.',en:'Waiting, manual steps and multiple friction points extended the end-to-end process time.'},
       insight:{es:'Digitalizar sin simplificar mantiene la complejidad dentro de una pantalla.',en:'Digitizing without simplifying keeps the complexity inside a screen.'},
       bet:{es:'Rediseñar el flujo AS-IS / TO-BE, eliminar pasos y handoffs innecesarios y recién entonces digitalizar la experiencia.',en:'Redesign the AS-IS / TO-BE flow, remove unnecessary steps and handoffs, and only then digitize the experience.'},
-      build:['Service Design','Process Mining','AS-IS / TO-BE','APIs','Process Redesign','Digital Experience'],
-      impact:{es:'99%+ menos tiempo operativo; el ciclo pasó de días a minutos.',en:'99%+ less operational time; the cycle moved from days to minutes.'},
+      build:['Service Design','AS-IS / TO-BE','Pain Points','Process Redesign','APIs','Digital Experience'],
+      impact:{es:'El ciclo pasó de 3 días a 10 minutos.',en:'The cycle moved from 3 days to 10 minutes.'},
       learning:{es:'A veces innovar no es sumar tecnología. Es retirar complejidad innecesaria.',en:"Sometimes innovation isn't adding more technology. It's removing unnecessary complexity."}
     },
     {
-      id:'product-adoption', number:'03',
+      id:'product-adoption', number:'03', flagship:true,
       category:{es:'PRODUCTO DIGITAL · SEGUROS',en:'DIGITAL PRODUCT · INSURANCE'}, organization:'RIMAC SEGUROS', year:'2019–2020',
       title:{es:'Portal de Autogestión para Corredores',en:'Broker Self-Service Portal'},
-      metric:'60→85%', metricLabel:{es:'tasa de uso de la herramienta',en:'tool adoption rate'},
-      question:{es:'¿Y SI EL PRODUCTO NO FUERA EL PROBLEMA?',en:"WHAT IF THE PRODUCT WASN'T THE PROBLEM?"},
-      summary:{es:'Diseñé un portal web para corredores que permitió activar pólizas EPS en línea, eliminando buzones físicos y acelerando la atención al cliente.',en:'I designed a web portal for insurance brokers that enabled online EPS policy activation, removing physical inboxes and speeding up customer service.'},
-      tags:['Product Ownership','UX Research','Capacitación'],
+      metric:'+25 PP', metricLabel:{es:'adopción de producto · 60% → 85%',en:'product adoption · 60% → 85%'},
+      question:{es:'¿Y si el problema no fuera el producto, sino la experiencia?',en:"What if the product wasn't the problem, but the experience?"},
+      summary:{es:'Investigación y rediseño para convertir una solución existente en una experiencia que las personas realmente utilizaran.',en:'Research and redesign to turn an existing solution into an experience people would actually use.'},
       noise:{es:'La adopción estaba por debajo de su potencial y el flujo todavía dependía de fricciones operativas y hábitos previos.',en:'Adoption was below its potential and the flow still depended on operational friction and previous habits.'},
       insight:{es:'La pregunta correcta no era “¿qué funcionalidad falta?”, sino “¿qué está ocurriendo en la experiencia?”.',en:'The right question was not “what is missing?”, but “what is happening in the experience?”.'},
       bet:{es:'Rediseñar la experiencia, acompañar el cambio y aprender con iteraciones enfocadas en uso real.',en:'Redesign the experience, support the change and learn through iterations focused on real usage.'},
-      build:['Product Ownership','UX Research','Journey Redesign','Digital Experience','Capacitación','Iteration'],
-      impact:{es:'La tasa de uso de la herramienta pasó de 60% a 85%.',en:'Tool adoption increased from 60% to 85%.'},
+      build:['UX Research','Journey Redesign','Product Adjustments','Communication','Training','Iteration'],
+      impact:{es:'La adopción pasó de 60% a 85%: +25 puntos porcentuales.',en:'Adoption increased from 60% to 85%: +25 percentage points.'},
       learning:{es:'Un producto no es exitoso cuando se lanza. Es exitoso cuando las personas lo usan.',en:"A product isn't successful when it's launched. It's successful when people use it."}
     },
     {
-      id:'vision-360', number:'04',
+      id:'vision-360', number:'04', flagship:true,
       category:{es:'AGENTE IA · BANCA',en:'AI AGENT · BANKING'}, organization:'INTERBANK', year:'2024 – PRESENTE',
       title:{es:'Agente Conversacional de Onboarding',en:'Conversational Onboarding Agent'},
-      metric:'24/7', metricLabel:{es:'conocimiento siempre disponible',en:'knowledge always available'},
-      question:{es:'¿Y SI EL CONOCIMIENTO DEL EQUIPO ESTUVIERA SIEMPRE DISPONIBLE?',en:'WHAT IF TEAM KNOWLEDGE WAS ALWAYS AVAILABLE?'},
-      summary:{es:'Estoy construyendo un agente con IA que democratiza el conocimiento del equipo y convierte conocimiento clave en una capacidad escalable.',en:'I am building an AI agent that democratizes team knowledge and turns key expertise into a scalable capability.'},
-      tags:['Conversational AI','GenAI','Agent Design'],
+      metric:'24/7', metricLabel:{es:'conocimiento disponible',en:'knowledge available'},
+      question:{es:'¿Y si el conocimiento del equipo estuviera disponible cuando alguien lo necesita?',en:'What if team knowledge were available exactly when someone needed it?'},
+      summary:{es:'Un agente conversacional para convertir conocimiento clave del equipo en una capacidad accesible y escalable.',en:'A conversational agent that turns key team knowledge into an accessible and scalable capability.'},
       noise:{es:'El conocimiento de onboarding dependía de personas clave y no siempre estaba disponible cuando alguien lo necesitaba.',en:'Onboarding knowledge depended on key people and was not always available when someone needed it.'},
       insight:{es:'El conocimiento se vuelve escalable cuando deja de depender únicamente de quién está disponible.',en:'Knowledge becomes scalable when it no longer depends only on who is available.'},
       bet:{es:'Diseñar una experiencia conversacional que convierta conocimiento del equipo en orientación accesible bajo demanda.',en:'Design a conversational experience that turns team knowledge into guidance accessible on demand.'},
       build:['Conversational AI','Generative AI','Agent Design','Knowledge Architecture','Prompt Design'],
-      impact:{es:'Conocimiento disponible 24/7 como capacidad del equipo.',en:'Team knowledge available 24/7 as a shared capability.'},
-      learning:{es:'[CONTENIDO POR VALIDAR]',en:'[CONTENT TO VALIDATE]'}
+      impact:{es:'Conocimiento disponible 24/7 como capacidad compartida del equipo.',en:'Team knowledge available 24/7 as a shared capability.'},
+      learning:{es:'El mejor conocimiento es el que aparece cuando hace falta, sin agregar fricción.',en:'The best knowledge appears when it is needed without adding friction.'}
     },
     {
-      id:'mibolsillo', number:'05', tier:'other',
-      category:{es:'STARTUP / FINTECH / UX RESEARCH',en:'STARTUP / FINTECH / UX RESEARCH'},
-      organization:'MiBolsillo', year:'2022',
+      id:'mibolsillo', number:'05', flagship:false,
+      category:{es:'STARTUP · FINTECH · UX RESEARCH',en:'STARTUP · FINTECH · UX RESEARCH'}, organization:'MIBOLSILLO', year:'2022',
       title:{es:'UX Research para una experiencia financiera más simple',en:'UX Research for a simpler financial experience'},
       metric:'4', metricLabel:{es:'perfiles de comportamiento',en:'behavioral profiles'},
-      question:{
-        es:'¿Y SI ORGANIZAR TUS FINANZAS FUERA MÁS FÁCIL QUE REGISTRARLAS?',
-        en:'WHAT IF MANAGING YOUR MONEY FELT EASIER THAN TRACKING IT?'
-      },
-      summary:{
-        es:'Investigamos cómo diferentes personas organizaban su dinero, qué les impedía mantener el hábito y qué necesitaban realmente de una herramienta financiera.',
-        en:'We explored how different people managed their money, what prevented them from maintaining the habit and what they actually needed from a financial tool.'
-      },
-      tags:['UX Research','Benchmark','Behavioral Patterns','User Personas','Experience Review','Product Recommendations','Wireframe Feedback'],
-      noise:{
-        es:'<p>MiBolsillo buscaba entender qué necesitaban realmente las personas para organizar mejor sus finanzas.</p><p>La investigación mostró fricciones alrededor del registro, la edición de información, la claridad de la experiencia y la motivación para mantener el hábito.</p><p>Al mismo tiempo, las personas querían visualizar su progreso, organizar sus objetivos y recibir mayor orientación sobre qué hacer con su dinero.</p>',
-        en:'<p>MiBolsillo wanted to understand what people actually needed to manage their finances better.</p><p>Research revealed friction around tracking, editing information, experience clarity and motivation to maintain the habit.</p><p>At the same time, people wanted to understand their progress, organize their goals and receive more guidance around what to do with their money.</p>'
-      },
-      insight:{
-        es:'Las personas no querían registrar más información. Querían entender qué hacer con ella.',
-        en:'People did not want to track more information. They wanted to understand what to do with it.'
-      },
-      bet:{
-        es:'Cambiar la lógica de “registrar movimientos” a “entender dónde estoy y qué puedo hacer ahora”. La experiencia debía ir más allá del registro y ayudar a:',
-        en:'Shift the experience from “tracking transactions” to “understanding where I am and what I can do next.” The product needed to go beyond tracking and help people:'
-      },
-      betFlow:{es:['ORGANIZAR','EXPLICAR','MOTIVAR','ACOMPAÑAR'],en:['ORGANIZE','EXPLAIN','MOTIVATE','GUIDE']},
+      question:{es:'¿Y si organizar tus finanzas fuera más fácil que registrarlas?',en:'What if managing your money felt easier than tracking it?'},
+      summary:{es:'Investigamos hábitos, fricciones y necesidades para convertir comportamientos dispersos en perfiles y oportunidades concretas de producto.',en:'We researched habits, friction and needs to turn scattered behaviors into profiles and concrete product opportunities.'},
+      noise:{es:'La experiencia tenía fricciones en registro, edición, claridad y motivación; al mismo tiempo, las personas querían entender su progreso y recibir orientación.',en:'The experience had friction around tracking, editing, clarity and motivation; at the same time, people wanted to understand their progress and receive guidance.'},
+      insight:{es:'Las personas no querían registrar más información. Querían entender qué hacer con ella.',en:'People did not want to track more information. They wanted to understand what to do with it.'},
+      bet:{es:'Mover la experiencia de “registrar movimientos” a “entender dónde estoy y qué puedo hacer ahora”.',en:'Move the experience from “tracking transactions” to “understanding where I am and what I can do next”.'},
       build:['UX Research','Benchmark','Behavioral Patterns','User Personas','Experience Review','Product Recommendations','Wireframe Feedback'],
-      buildText:{
-        es:'La investigación permitió reconocer diferentes comportamientos según organización financiera, emprendimiento, aspiraciones y adopción de herramientas digitales. Estos patrones se utilizaron para construir perfiles y detectar oportunidades concretas para simplificar y evolucionar la experiencia.',
-        en:'Research uncovered different behaviors around financial organization, entrepreneurship, aspirations and digital adoption. These patterns became user profiles and concrete opportunities to simplify and evolve the experience.'
-      },
-      impact:{es:'4 perfiles de comportamiento financiero.',en:'4 financial behavioral profiles.'},
-      impactBlock:{
-        metric:'4', metricLabel:{es:'PERFILES<br>DE COMPORTAMIENTO',en:'BEHAVIORAL<br>PROFILES'},
-        text:{
-          es:'En lugar de diseñar para un usuario financiero genérico, la investigación permitió reconocer distintas necesidades y comportamientos. El resultado fue una base más clara para priorizar mejoras en registro, comunicación, experiencia y propuesta de valor.',
-          en:'Instead of designing for a generic financial user, research revealed different behaviors and needs. The result was a clearer foundation for prioritizing improvements across registration, communication, experience and value proposition.'
-        }
-      },
-      learning:{
-        es:'Un producto financiero no crea valor por mostrar más datos. Crea valor cuando esos datos ayudan a decidir.',
-        en:'A financial product does not create value by showing more data. It creates value when data helps people decide.'
-      }
+      impact:{es:'4 perfiles de comportamiento con necesidades diferenciadas como base para priorizar la evolución de la experiencia.',en:'4 behavioral profiles with different needs became a foundation for prioritizing the experience evolution.'},
+      learning:{es:'Un producto financiero crea valor cuando los datos ayudan a decidir.',en:'A financial product creates value when data helps people decide.'}
     },
     {
-      id:'yellow-brain-research', number:'06', tier:'other',
-      category:{es:'CONSULTING / UX RESEARCH / SERVICE DESIGN',en:'CONSULTING / UX RESEARCH / SERVICE DESIGN'},
-      organization:'Yellow Brain', year:'2021–2022',
+      id:'yellow-brain-research', number:'06', flagship:false,
+      category:{es:'CONSULTING · UX RESEARCH · SERVICE DESIGN',en:'CONSULTING · UX RESEARCH · SERVICE DESIGN'}, organization:'YELLOW BRAIN', year:'2021–2022',
       title:{es:'UX Research + Service Design para conectar un ecosistema',en:'UX Research + Service Design for a connected ecosystem'},
       metric:'59', metricLabel:{es:'acciones de investigación',en:'research activities'},
-      microCopy:{es:'31 entrevistas + 5 shadowings + 23 visitas de campo',en:'31 interviews + 5 shadowing sessions + 23 field visits'},
-      question:{
-        es:'¿Y SI ENTENDER TODO EL ECOSISTEMA CAMBIARA LA SOLUCIÓN?',
-        en:'WHAT IF UNDERSTANDING THE WHOLE ECOSYSTEM CHANGED THE SOLUTION?'
-      },
-      summary:{
-        es:'Desde Yellow Brain investigamos una experiencia donde distintos actores necesitaban coordinar, decidir y construir confianza. El research permitió transformar comportamientos y puntos de dolor en principios de diseño, conceptos de servicio y una estrategia de evolución.',
-        en:'At Yellow Brain, we researched an experience where different actors needed to coordinate, make decisions and build trust. Research transformed behaviors and pain points into design principles, service concepts and an evolution strategy.'
-      },
-      tags:['UX Research','Field Research','Shadowing','Journey Mapping','Service Design','Value Proposition','Concept Design','Concept Testing','Roadmap'],
-      noise:{
-        es:'<p>El reto involucraba múltiples actores que necesitaban tomar decisiones, coordinar actividades y resolver problemas dentro de una experiencia fragmentada.</p><p>Las dificultades de un actor impactaban directamente en los demás.</p><p>Antes de diseñar una solución era necesario entender cómo funcionaba el sistema completo.</p>',
-        en:'<p>The challenge involved multiple actors who needed to make decisions, coordinate activities and solve problems across a fragmented experience.</p><p>One actor\'s friction directly affected the others.</p><p>Before designing a solution, we needed to understand how the entire system worked.</p>'
-      },
-      evidence:{
-        items:[
-          {v:'31', l:{es:'ENTREVISTAS<br>EN PROFUNDIDAD',en:'IN-DEPTH<br>INTERVIEWS'}},
-          {v:'5', l:{es:'SESIONES<br>DE SHADOWING',en:'SHADOWING<br>SESSIONS'}},
-          {v:'23', l:{es:'VISITAS<br>DE CAMPO',en:'FIELD<br>VISITS'}}
-        ],
-        total:{v:'59', l:{es:'ACCIONES<br>DE INVESTIGACIÓN',en:'RESEARCH<br>ACTIVITIES'}}
-      },
-      insight:{
-        es:'No era solo un problema de proceso. Era un problema de confianza y coordinación.',
-        en:'It was not just a process problem. It was a problem of trust and coordination.'
-      },
-      bet:{
-        es:'En lugar de diseñar una solución aislada para un único usuario, la oportunidad estaba en entender y conectar las necesidades del ecosistema. La propuesta se estructuró alrededor de tres principios:',
-        en:'Instead of designing an isolated solution for a single user, the opportunity was to understand and connect the needs of the ecosystem. The experience was structured around three principles:'
-      },
-      betPrinciples:{
-        es:[{n:'01',l:'ASESORÍA Y SERVICIO'},{n:'02',l:'SIMPLE Y FÁCIL'},{n:'03',l:'CONFIABLE'}],
-        en:[{n:'01',l:'GUIDANCE & SERVICE'},{n:'02',l:'SIMPLE & EASY'},{n:'03',l:'TRUSTWORTHY'}]
-      },
-      build:['UX Research','Field Research','Shadowing','Journey Mapping','Service Design','Value Proposition','Concept Design','Concept Testing','Roadmap'],
-      impact:{es:'59 acciones de investigación.',en:'59 research activities.'},
-      impactBlock:{
-        flow:{es:['3 ACTORES','3 CONCEPTOS','1 ROADMAP'],en:['3 ACTORS','3 CONCEPTS','1 ROADMAP']},
-        text:{
-          es:'Los hallazgos permitieron organizar las necesidades del ecosistema alrededor de tres grupos principales y traducirlas en conceptos de servicio diseñados para responder a diferentes momentos y necesidades. Los conceptos fueron posteriormente validados antes de estructurar una estrategia de evolución.',
-          en:'Insights organized the ecosystem around three main groups and translated their needs into service concepts designed for different moments and needs. The concepts were then validated before defining an evolution strategy.'
-        },
-        validation:{v:'14', l:{es:'PARTICIPANTES<br>EN VALIDACIÓN',en:'VALIDATION<br>PARTICIPANTS'}},
-        roadmap:[
-          {n:'01', l:{es:'EXPLORAR<br>+<br>ACOMPAÑAR',en:'EXPLORE<br>+<br>GUIDE'}},
-          {n:'02', l:{es:'CONECTAR<br>+<br>FIDELIZAR',en:'CONNECT<br>+<br>RETAIN'}},
-          {n:'03', l:{es:'ESCALAR<br>+<br>NUEVOS SERVICIOS',en:'SCALE<br>+<br>NEW SERVICES'}}
-        ]
-      },
-      learning:{
-        es:'Service design no es conectar pantallas. Es conectar personas, necesidades y confianza.',
-        en:"Service design isn't about connecting screens. It's about connecting people, needs and trust."
-      }
+      question:{es:'¿Y si entender todo el ecosistema cambiara la solución?',en:'What if understanding the whole ecosystem changed the solution?'},
+      summary:{es:'Desde Yellow Brain investigamos una experiencia con múltiples actores y convertimos hallazgos de campo en principios, conceptos de servicio y un roadmap.',en:'At Yellow Brain, we researched a multi-actor experience and turned field insights into principles, service concepts and a roadmap.'},
+      noise:{es:'Múltiples actores necesitaban tomar decisiones y coordinar actividades dentro de una experiencia fragmentada. La fricción de uno impactaba directamente en los demás.',en:'Multiple actors needed to make decisions and coordinate activities across a fragmented experience. One actor’s friction directly affected the others.'},
+      insight:{es:'No era solo un problema de proceso. Era un problema de confianza y coordinación.',en:'It was not just a process problem. It was a problem of trust and coordination.'},
+      bet:{es:'En lugar de diseñar una solución aislada, entender y conectar las necesidades de todo el ecosistema.',en:'Instead of designing an isolated solution, understand and connect the needs of the whole ecosystem.'},
+      build:['UX Research','31 In-depth Interviews','5 Shadowing Sessions','23 Field Visits','Journey Mapping','Service Design','Concept Testing','Roadmap'],
+      impact:{es:'59 acciones de investigación; los hallazgos se tradujeron en 3 conceptos de servicio, validados posteriormente con 14 participantes, y un roadmap de evolución.',en:'59 research activities; insights became 3 service concepts, later validated with 14 participants, and an evolution roadmap.'},
+      learning:{es:'Service Design no es conectar pantallas. Es conectar personas, necesidades y confianza.',en:'Service Design is not about connecting screens. It is about connecting people, needs and trust.'}
     }
   ],
   testimonials:[
     {initials:'MM',name:'Mauricio Miranda',role:'Product Owner · Interbank',quote:{es:'Alfredo tiene una capacidad poco común: entiende la tecnología tan bien como el negocio, y siempre encuentra la forma de conectar ambos mundos. Su enfoque en el usuario marca la diferencia en cada proyecto.',en:'Alfredo has a rare ability: he understands technology as well as the business and consistently finds a way to connect both worlds. His user focus makes a difference in every project.'}},
     {initials:'SM',name:'Sebastián Mirvois',role:'Product Owner · Rimac Seguros',quote:{es:'Trabajar con Alfredo es trabajar con alguien que primero escucha y luego propone. Su rediseño de procesos transformó por completo nuestros tiempos operativos. Un profesional estratégico y muy humano.',en:'Working with Alfredo means working with someone who listens first and proposes second. His process redesign transformed our operational times. A strategic and deeply human professional.'}}
   ],
-  roles:{
-    es:['ANALISTA DE NEGOCIO','PRODUCT OWNER','DESIGN THINKER','ESTRATEGA DE PRODUCTO','BUILDER DE IA','STORYTELLER','SOLUCIONADOR.'],
-    en:['BUSINESS ANALYST','PRODUCT OWNER','DESIGN THINKER','PRODUCT STRATEGIST','AI BUILDER','STORYTELLER','PROBLEM SOLVER.']
-  },
   i18n:{
     es:{
-      'loader.caption':'ENCUENTRA EL RITMO.','film.play':'REPRODUCIR','film.pause':'PAUSA',
-      'nav.why':'POR QUÉ','nav.method':'MÉTODO','nav.work':'CASOS','nav.about':'SOBRE MÍ','nav.contact':'CONTACTO',
-      'hero.filmLabel':'01 / POR QUÉ','hero.kicker':'DISEÑO DE NEGOCIO + ESTRATEGIA DE PRODUCTO',
-      'hero.title':'CONVIERTO<br>COMPLEJIDAD<br>EN<br><span class="red">MOVIMIENTO.</span>',
-      'hero.sub':'Convierto problemas complejos en productos, experiencias y estrategias que hacen avanzar el negocio, conectando personas, diseño y tecnología.',
-      'hero.tagline':'EL RITMO CREA CLARIDAD.','hero.tag.business':'DISEÑO DE NEGOCIO','hero.tag.product':'PRODUCTO','hero.tag.ai':'IA','hero.tag.story':'STORYTELLING',
-      'hero.cta1':'VER MIS CASOS ↓','hero.signature':'DONDE OTROS VEN RUIDO · YO ENCUENTRO EL RITMO.','hero.scroll':'DESLIZA PARA SEGUIR EL RITMO',
-      'workOther.eyebrow':'OTROS CASOS','workOther.title':'OTRAS PREGUNTAS<br>QUE VALÍA LA PENA<br><span class="red">RESOLVER.</span>','workOther.lead':'Otros proyectos donde la investigación permitió convertir comportamientos, fricciones y necesidades reales en decisiones de producto y servicio.',
-      'why.eyebrow':'POR QUÉ','why.title':'ME GUSTA<br>RESOLVER<br><span class="red">PROBLEMAS.</span>',
-      'why.body1':'Me interesa entender qué está frenando algo antes de decidir cómo resolverlo. Los roles, industrias y herramientas cambian; el patrón no: entender el problema, conectar las piezas, hacerlo tangible y generar movimiento.',
-      'why.body2':'Empiezo por la pregunta correcta. Después elijo la herramienta que mejor ayuda a avanzar.',
-      'why.p1':'ENTENDER EL PROBLEMA','why.p2':'CONECTAR LAS PIEZAS','why.p3':'HACERLO TANGIBLE','why.p4':'GENERAR MOVIMIENTO','why.pull':'CONVERTIR COMPLEJIDAD EN POSIBILIDAD.',
-      'method.filmLabel':'02 / MÉTODO','method.filmCopy':'DE LA COMPLEJIDAD<br>A LA <span class="red">CLARIDAD.</span>',
-      'method.stage':'ENTENDER → CONECTAR → CREAR → MOVER → APRENDER','method.eyebrow':'CÓMO TRABAJO','method.title':'ENCUENTRA EL<br><span class="red">RITMO.</span>',
-      'method.lead':'No parto de un framework. Parto del problema y sigo un ritmo simple que permite aprender antes de escalar.','method.loop':'ENTENDER → CONECTAR → CREAR → MOVER → APRENDER ↻',
-      'method.s1.num':'01 / ENTENDER','method.s1.title':'ENCUENTRA EL PROBLEMA REAL.','method.understand':'Entender el problema real: personas, contexto, procesos, datos y restricciones.','method.s1.actions':'ESCUCHAR · OBSERVAR · PREGUNTAR · INVESTIGAR','method.s1.q':'¿QUÉ PROBLEMA ESTAMOS RESOLVIENDO REALMENTE?',
-      'method.s2.num':'02 / CONECTAR','method.s2.title':'ENCUENTRA EL PATRÓN.','method.connect':'Conectar información que vive separada hasta encontrar el patrón que explica lo que ocurre.','method.s2.actions':'PERSONAS · NEGOCIO · DATOS · TECNOLOGÍA','method.s2.q':'EL RITMO CREA CLARIDAD.',
-      'method.s3.num':'03 / CREAR','method.s3.title':'HAZLO TANGIBLE.','method.create':'Convertir una idea en algo visible y testeable: hipótesis, prototipo y producto.','method.s3.actions':'IDEA · HIPÓTESIS · PROTOTIPO · PRODUCTO','method.s3.q':'NO SOLO LO PIENSES. HAZLO.',
-      'method.s4.num':'04 / MOVER','method.s4.title':'CONVIERTE IDEAS EN CAMBIO.','method.move':'Llevar la solución a adopción, decisiones, aprendizaje y resultados.','method.s4.actions':'PROBAR · APRENDER · COMUNICAR · ITERAR · ESCALAR','method.s4.q':'MOVER → APRENDER → VOLVER A MOVER.',
-      'method.capEyebrow':'CAPACIDADES','cap.business':'NEGOCIO','cap.product':'PRODUCTO','cap.experience':'EXPERIENCIA','cap.technology':'TECNOLOGÍA','cap.story':'NARRATIVA','method.capTitle':'EL PROBLEMA ELIGE LA HERRAMIENTA<span class="red">.</span>','method.cap':'La herramienta viene después del problema. Elijo lo necesario para convertir claridad en movimiento.','method.close':'NO VENDO HERRAMIENTAS. LAS USO PARA RESOLVER PROBLEMAS.',
-      'work.filmLabel':'03 / CASOS','work.filmCopy':'PRIMERO LA HISTORIA.<br><span class="red">EL TRABAJO ES LA PRUEBA.</span>','work.filmClose':'PROBLEMAS REALES · DECISIONES REALES · RESULTADOS MEDIBLES',
-      'work.eyebrow':'CASOS SELECCIONADOS','work.title':'PREGUNTAS<br>QUE VALE LA PENA<br><span class="red">RESOLVER.</span>','work.lead':'Cuatro casos reales en banca y seguros. Cuatro formas distintas de convertir complejidad en una solución que mueve resultados.','work.kicker':'4 CASOS CLAVE · INTERBANK + RIMAC SEGUROS','work.view':'VER CASO →','work.insight':'INSIGHT',
-      'impact.filmLabel':'04 / SOBRE MÍ','impact.filmCopy':'LA CLARIDAD SE CONVIERTE<br>EN <span class="red">IMPACTO.</span>','impact.filmClose':'PROBLEMA → ENTENDIMIENTO → DISEÑO → TECNOLOGÍA → IMPACTO',
-      'impact.eyebrow':'IMPACTO','impact.title':'LA CLARIDAD<br>DEBE MOVER<br><span class="red">ALGO.</span>','impact.lead':'Una solución importa cuando cambia algo medible: tiempo, adopción, claridad operativa o capacidad de decidir.','impact.m1':'MENOS TIEMPO DE CONSULTA','impact.m2':'MENOS TIEMPO OPERATIVO','impact.m3':'ADOPCIÓN DE LA HERRAMIENTA','impact.m4':'CONOCIMIENTO SIEMPRE DISPONIBLE',
-      'about.eyebrow':'SOBRE MÍ','about.title':'HOLA<span class="red">.</span><br>SOY ALFREDO.<br><span class="dim">RESUELVO PROBLEMAS.</span>','about.body':'He trabajado entre negocio, producto, experiencia y tecnología. Los títulos cambiaron; mi forma de trabajar no: entender algo complejo, conectar las piezas y encontrar una manera de hacerlo avanzar.','about.focusLabel':'MI FOCO','about.focus':'ENTENDER · CONECTAR · HACER TANGIBLE · MOVER','about.noteLabel':'NOTA PERSONAL','about.note':'Tocar batería también me recuerda algo simple: antes de entrar, hay que escuchar el tempo. Esa idea de escuchar, encontrar el momento y sumar al conjunto también aparece en cómo trabajo con equipos.',
-      'people.filmLabel':'05 / CONTACTO','people.filmCopy':'EL BUEN TRABAJO<br><span class="red">MUEVE PERSONAS.</span>','people.filmClose':'ESCUCHAR · CREAR · AVANZAR JUNTOS',
-      'test.eyebrow':'TESTIMONIOS','test.title':'PERSONAS CON LAS QUE HE <span class="red">CREADO.</span>','test.lead':'Así describen trabajar juntos, en banca, seguros y producto.','test.principles':'CURIOSIDAD · CLARIDAD · PERSONAS · IMPACTO',
-      'contact.title':'¿TIENES UN PROBLEMA<br>QUE TODAVÍA NO<br>TERMINA DE ENCAJAR?<span class="good">BIEN.</span>','contact.sub':'AHÍ ES DONDE ME GUSTA EMPEZAR.','contact.body':'Producto, procesos, experiencia, inteligencia artificial o simplemente un problema que todavía no está bien definido. Empecemos por entenderlo.','contact.linkedin':'VER LINKEDIN','contact.pending':'[CONTENIDO POR VALIDAR]',
-      'footer.role':'Business Design & Product Strategist · Lima / Perú','footer.back':'VOLVER ARRIBA ↑','footer.principle':'EMPIEZA POR EL PROBLEMA.',
-      'case.breadcrumb.home':'INICIO','case.breadcrumb.work':'CASOS','case.back':'← VOLVER A LOS CASOS','case.next':'SIGUIENTE CASO →','case.question':'LA PREGUNTA','case.noise':'EL RUIDO','case.insight':'EL INSIGHT','case.bet':'LA APUESTA','case.build':'LO CONSTRUIDO','case.impact':'EL IMPACTO','case.learning':'EL APRENDIZAJE','case.study':'CASO DE ESTUDIO'
+      'loader.caption':'ENCUENTRA EL RITMO.','nav.home':'INICIO','nav.work':'CASOS','nav.method':'MÉTODO','nav.about':'SOBRE MÍ','nav.contact':'CONTACTO',
+      'proof.eyebrow':'CASOS DE ÉXITO','proof.title':'Resultados en proyectos reales','proof.c1':'Asistente inteligente para asesores · Interbank','proof.c2':'Flujo digital de pólizas · Rimac Seguros','proof.c3':'Portal de autogestión · Rimac Seguros','proof.c4':'Banca · Seguros · Startups · Consultoría','hero.eyebrow':'DISEÑO DE NEGOCIO · ESTRATEGIA DE PRODUCTO · UX · IA','hero.title':'Convierto complejidad en <span class="red">resultados.</span>','hero.lead':'Conecto negocio, producto, experiencia y tecnología para resolver lo que frena el avance.','hero.ctaWork':'VER CASOS ↓','hero.ctaTalk':'HABLEMOS ↗','hero.principle':'Empiezo por el problema.','hero.principle2':'El problema elige la herramienta.','hero.videoLine':'RHYTHM CREATES CLARITY.','hero.m1':'menos tiempo de consulta','hero.m2':'proceso rediseñado de principio a fin','hero.m3':'más adopción de producto','hero.m4':'años resolviendo problemas',
+      'work.eyebrow':'CASOS','work.title':'Trabajo que mueve algo.','work.lead':'El resultado primero. La historia completa, dentro de cada caso.','work.note':'Banca · Seguros · Fintech · Consultoría','work.view':'VER CASO →','work.otherEyebrow':'OTROS CASOS','work.otherTitle':'Más problemas que valía la pena entender.','work.otherLead':'Research y Service Design: de comportamientos reales a decisiones de producto.',
+      'method.eyebrow':'CÓMO TRABAJO','method.title':'Empiezo por el problema, no por la solución.','method.lead':'Entender antes de construir. Aprender antes de escalar.','method.s1':'ENTENDER','method.s1body':'Escuchar y encontrar el problema real.','method.s2':'CONECTAR','method.s2body':'Unir personas, negocio, datos y tecnología.','method.s3':'CREAR','method.s3body':'Convertir claridad en algo visible y testeable.','method.s4':'MOVER','method.s4body':'Llevarlo a adopción y resultado.','method.toolNum':'LA CAJA DE HERRAMIENTAS','method.toolClose':'No vendo herramientas. Las uso para resolver problemas.','method.g1':'Negocio','method.g2':'Experiencia','method.g3':'Tecnología','method.g4':'Narrativa','method.toolEyebrow':'El problema elige la herramienta.','method.toolLead':'Uso la disciplina que el problema pide, no la que está de moda.',
+      'about.eyebrow':'SOBRE MÍ','about.title':'Estrategia, diseño y tecnología. En el orden que el problema pida.','about.name':'Soy Alfredo Aguirre.','about.body1':'Trabajo entre negocio, producto y tecnología: entender algo complejo, conectar las piezas y encontrar cómo hacerlo avanzar.','about.body2':'Banca, seguros, startups y consultoría — bajando ideas a procesos, productos y experiencias reales.','about.quote':'La claridad no es el resultado final. Es lo que permite que algo se mueva.','about.note':'De tocar batería me quedó una regla: antes de entrar, escucha el tempo.',
+      'test.eyebrow':'REFERENCIAS','test.filmLine':'El trabajo bueno se hace acompañado.','test.title':'Con quiénes he trabajado.',
+      'contact.eyebrow':'CONTACTO','contact.title':'¿Tienes un problema que todavía no termina de <span class="red">encajar?</span>','contact.good':'BIEN.','contact.body':'Ahí empiezan los proyectos que más me interesan. Conversemos.','contact.cta':'HABLEMOS EN LINKEDIN ↗',
+      'footer.tagline':'RHYTHM CREATES CLARITY.','footer.role':'Business Design & Product Strategist · Lima / Perú','footer.principle':'START WITH THE PROBLEM.','footer.back':'VOLVER ARRIBA ↑',
+      'case.breadcrumb.home':'INICIO','case.breadcrumb.work':'CASOS','case.back':'← VOLVER A LOS CASOS','case.next':'SIGUIENTE CASO →','case.noise':'EL RUIDO','case.insight':'EL INSIGHT','case.bet':'LA APUESTA','case.build':'LO CONSTRUIDO','case.impact':'EL IMPACTO','case.learning':'EL APRENDIZAJE','case.study':'CASO DE ESTUDIO'
     },
     en:{
-      'loader.caption':'FIND THE RHYTHM.','film.play':'PLAY','film.pause':'PAUSE',
-      'nav.why':'WHY','nav.method':'METHOD','nav.work':'WORK','nav.about':'ABOUT','nav.contact':'CONTACT',
-      'hero.filmLabel':'01 / WHY','hero.kicker':'BUSINESS DESIGN + PRODUCT STRATEGY','hero.title':'I TURN<br>COMPLEXITY<br>INTO<br><span class="red">MOVEMENT.</span>','hero.sub':'I turn complex problems into products, experiences and strategies that move the business forward by connecting people, design and technology.','hero.tagline':'RHYTHM CREATES CLARITY.','hero.tag.business':'BUSINESS DESIGN','hero.tag.product':'PRODUCT','hero.tag.ai':'AI','hero.tag.story':'STORYTELLING','hero.cta1':'EXPLORE MY WORK ↓','hero.signature':'WHERE OTHERS SEE NOISE · I FIND THE RHYTHM.','hero.scroll':'SCROLL TO FIND THE RHYTHM',
-      'workOther.eyebrow':'OTHER WORK','workOther.title':'MORE QUESTIONS<br>WORTH<br><span class="red">SOLVING.</span>','workOther.lead':'Other projects where research turned real behaviors, friction and needs into product and service decisions.',
-      'why.eyebrow':'WHY','why.title':'I LIKE<br>SOLVING<br><span class="red">THINGS.</span>','why.body1':'I want to understand what is holding something back before deciding how to solve it. Roles, industries and tools change; the pattern does not: understand the problem, connect the pieces, make it tangible and create movement.','why.body2':'I start with the right question. Then I choose the tool that best helps the problem move forward.','why.p1':'UNDERSTAND THE PROBLEM','why.p2':'CONNECT THE PIECES','why.p3':'MAKE IT TANGIBLE','why.p4':'CREATE MOVEMENT','why.pull':'TURN COMPLEXITY INTO POSSIBILITY.',
-      'method.filmLabel':'02 / METHOD','method.filmCopy':'FROM COMPLEXITY<br>TO <span class="red">CLARITY.</span>','method.stage':'UNDERSTAND → CONNECT → CREATE → MOVE → LEARN','method.eyebrow':'HOW I WORK','method.title':'FIND THE<br><span class="red">RHYTHM.</span>','method.lead':'I do not start with a framework. I start with the problem and follow a simple rhythm that creates learning before scale.','method.loop':'UNDERSTAND → CONNECT → CREATE → MOVE → LEARN ↻',
-      'method.s1.num':'01 / UNDERSTAND','method.s1.title':'FIND THE REAL PROBLEM.','method.understand':'Understand the real problem: people, context, processes, data and constraints.','method.s1.actions':'LISTEN · OBSERVE · QUESTION · RESEARCH','method.s1.q':'WHAT PROBLEM ARE WE ACTUALLY SOLVING?',
-      'method.s2.num':'02 / CONNECT','method.s2.title':'FIND THE PATTERN.','method.connect':'Connect information that normally lives apart until the pattern becomes visible.','method.s2.actions':'PEOPLE · BUSINESS · DATA · TECHNOLOGY','method.s2.q':'RHYTHM CREATES CLARITY.',
-      'method.s3.num':'03 / CREATE','method.s3.title':'MAKE IT TANGIBLE.','method.create':'Turn an idea into something visible and testable: hypothesis, prototype and product.','method.s3.actions':'IDEA · HYPOTHESIS · PROTOTYPE · PRODUCT','method.s3.q':"DON'T JUST THINK IT. MAKE IT.",
-      'method.s4.num':'04 / MOVE','method.s4.title':'TURN IDEAS INTO CHANGE.','method.move':'Move the solution into adoption, decisions, learning and results.','method.s4.actions':'TEST · LEARN · COMMUNICATE · ITERATE · SCALE','method.s4.q':'MOVE → LEARN → MOVE AGAIN.',
-      'method.capEyebrow':'CAPABILITIES','cap.business':'BUSINESS','cap.product':'PRODUCT','cap.experience':'EXPERIENCE','cap.technology':'TECHNOLOGY','cap.story':'STORY','method.capTitle':'THE PROBLEM CHOOSES THE TOOL<span class="red">.</span>','method.cap':'The tool comes after the problem. I choose what is needed to turn clarity into movement.','method.close':"I DON'T SELL TOOLS. I USE THEM TO SOLVE PROBLEMS.",
-      'work.filmLabel':'03 / WORK','work.filmCopy':'STORY FIRST.<br><span class="red">WORK AS PROOF.</span>','work.filmClose':'REAL PROBLEMS · REAL DECISIONS · MEASURABLE RESULTS','work.eyebrow':'SELECTED WORK','work.title':'QUESTIONS<br>WORTH<br><span class="red">SOLVING.</span>','work.lead':'Four real cases across banking and insurance. Four different ways of turning complexity into solutions that move results.','work.kicker':'4 FLAGSHIP CASES · INTERBANK + RIMAC SEGUROS','work.view':'VIEW CASE →','work.insight':'INSIGHT',
-      'impact.filmLabel':'04 / ABOUT','impact.filmCopy':'CLARITY BECOMES<br><span class="red">IMPACT.</span>','impact.filmClose':'PROBLEM → UNDERSTANDING → DESIGN → TECHNOLOGY → IMPACT','impact.eyebrow':'IMPACT','impact.title':'CLARITY<br>SHOULD MOVE<br><span class="red">SOMETHING.</span>','impact.lead':'A solution matters when it changes something measurable: time, adoption, operational clarity or the ability to decide.','impact.m1':'LESS CONSULTATION TIME','impact.m2':'LESS OPERATIONAL TIME','impact.m3':'TOOL ADOPTION','impact.m4':'KNOWLEDGE ALWAYS AVAILABLE',
-      'about.eyebrow':'ABOUT','about.title':'HI<span class="red">.</span><br>I\'M ALFREDO.<br><span class="dim">I SOLVE PROBLEMS.</span>','about.body':'I have worked across business, product, experience and technology. The titles changed; my way of working did not: understand something complex, connect the pieces and find a way to move it forward.','about.focusLabel':'MY FOCUS','about.focus':'UNDERSTAND · CONNECT · MAKE TANGIBLE · MOVE','about.noteLabel':'PERSONAL NOTE','about.note':'Playing drums also reminds me of something simple: before you come in, you listen to the tempo. That habit of listening, finding the right moment and adding to the whole also shapes how I work with teams.',
-      'people.filmLabel':'05 / CONTACT','people.filmCopy':'GOOD WORK<br><span class="red">MOVES PEOPLE.</span>','people.filmClose':'LISTEN · CREATE · MOVE TOGETHER','test.eyebrow':'TESTIMONIALS','test.title':'PEOPLE I\'VE CREATED <span class="red">WITH.</span>','test.lead':"Here's how they describe working together, across banking, insurance and product.",'test.principles':'CURIOSITY · CLARITY · PEOPLE · IMPACT',
-      'contact.title':'HAVE A PROBLEM<br>YOU CAN\'T<br>QUITE CRACK?<span class="good">GOOD.</span>','contact.sub':"THAT'S WHERE I LIKE TO START.",'contact.body':'Product, processes, experience, artificial intelligence — or simply a problem that is not well defined yet. Let us start by understanding it.','contact.linkedin':'VIEW LINKEDIN','contact.pending':'[CONTENT TO VALIDATE]',
-      'footer.role':'Business Design & Product Strategist · Lima / Peru','footer.back':'BACK TO TOP ↑','footer.principle':'START WITH THE PROBLEM.',
-      'case.breadcrumb.home':'HOME','case.breadcrumb.work':'WORK','case.back':'← BACK TO WORK','case.next':'NEXT CASE →','case.question':'THE QUESTION','case.noise':'THE NOISE','case.insight':'THE INSIGHT','case.bet':'THE BET','case.build':'THE BUILD','case.impact':'THE IMPACT','case.learning':'THE LEARNING','case.study':'CASE STUDY'
+      'loader.caption':'FIND THE RHYTHM.','nav.home':'HOME','nav.work':'WORK','nav.method':'METHOD','nav.about':'ABOUT','nav.contact':'CONTACT',
+      'proof.eyebrow':'PROVEN RESULTS','proof.title':'Outcomes from real projects','proof.c1':'Intelligent assistant for advisors · Interbank','proof.c2':'Digital policy flow · Rimac Seguros','proof.c3':'Broker self-service portal · Rimac Seguros','proof.c4':'Banking · Insurance · Startups · Consulting','hero.eyebrow':'BUSINESS DESIGN · PRODUCT STRATEGY · UX · AI','hero.title':'I turn complexity into <span class="red">outcomes.</span>','hero.lead':'I connect business, product, experience and technology to unblock what is holding progress back.','hero.ctaWork':'VIEW WORK ↓','hero.ctaTalk':'LET’S TALK ↗','hero.principle':'I start with the problem.','hero.principle2':'The problem chooses the tool.','hero.videoLine':'RHYTHM CREATES CLARITY.','hero.m1':'less consultation time','hero.m2':'process redesigned end to end','hero.m3':'more product adoption','hero.m4':'years solving problems',
+      'work.eyebrow':'WORK','work.title':'Work that moves something.','work.lead':'The outcome first. The full story lives inside each case.','work.note':'Banking · Insurance · Fintech · Consulting','work.view':'VIEW CASE →','work.otherEyebrow':'OTHER WORK','work.otherTitle':'More problems worth understanding.','work.otherLead':'Research and Service Design: from real behaviors to product decisions.',
+      'method.eyebrow':'HOW I WORK','method.title':'I start with the problem, not the solution.','method.lead':'Understand before building. Learn before scaling.','method.s1':'UNDERSTAND','method.s1body':'Listen and find the real problem.','method.s2':'CONNECT','method.s2body':'Connect people, business, data and technology.','method.s3':'CREATE','method.s3body':'Turn clarity into something visible and testable.','method.s4':'MOVE','method.s4body':'Move it into adoption and results.','method.toolNum':'THE TOOLBOX','method.toolClose':"I don't sell tools. I use them to solve problems.",'method.g1':'Business','method.g2':'Experience','method.g3':'Technology','method.g4':'Story','method.toolEyebrow':'The problem chooses the tool.','method.toolLead':'I use the discipline the problem asks for, not the fashionable one.',
+      'about.eyebrow':'ABOUT','about.title':'Strategy, design and technology. In whatever order the problem asks for.','about.name':'I’m Alfredo Aguirre.','about.body1':'I work between business, product and technology: understand something complex, connect the pieces, find how to move it forward.','about.body2':'Banking, insurance, startups and consulting — turning ideas into real processes, products and experiences.','about.quote':'Clarity is not the final result. It is what allows something to move.','about.note':'Playing drums left me one rule: before you come in, listen to the tempo.',
+      'test.eyebrow':'REFERENCES','test.filmLine':'Good work is never done alone.','test.title':'Who I have worked with.',
+      'contact.eyebrow':'CONTACT','contact.title':'Have a problem that still doesn’t quite <span class="red">fit?</span>','contact.good':'GOOD.','contact.body':'That is where the projects I enjoy most begin. Let’s talk.','contact.cta':'LET’S TALK ON LINKEDIN ↗',
+      'footer.tagline':'RHYTHM CREATES CLARITY.','footer.role':'Business Design & Product Strategist · Lima / Peru','footer.principle':'START WITH THE PROBLEM.','footer.back':'BACK TO TOP ↑',
+      'case.breadcrumb.home':'HOME','case.breadcrumb.work':'WORK','case.back':'← BACK TO WORK','case.next':'NEXT CASE →','case.noise':'THE NOISE','case.insight':'THE INSIGHT','case.bet':'THE BET','case.build':'THE BUILD','case.impact':'THE IMPACT','case.learning':'THE LEARNING','case.study':'CASE STUDY'
     }
   }
 };

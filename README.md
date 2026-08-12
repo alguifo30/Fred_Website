@@ -1,300 +1,358 @@
-# F.RED Portfolio — v25 (transitions layer)
+# F.RED Portfolio — v26
 
-Base: v24 (structure, content, i18n, iOS autoplay hardening) — untouched.
-This version adds a transitions layer on top and fixes one bug that was
-silently disabling reveals.
+Built on the v25 "Commercial Storytelling" structure you sent. The five
+sections, their order and their layout are unchanged; this pass rewrites
+the copy, restores the client logos, cuts the site down to two films and
+adds the interaction layer.
 
-## What was added
+## 1 · The copy — the main change
 
-Two new files. Delete them and the site still works; it just stops moving.
+The voice note said the site was saturated: too many words, everything in
+caps, everything highlighted, so nothing read as important. Three fixes:
 
-- `css/transitions.css`
-- `js/transitions.js`
+**Red now appears twice on the whole page** — the hero and the closing
+question. It was appearing five times (hero, work, method, about,
+contact), which is why nothing landed as emphasis. Section headlines are
+now plain white.
 
-Both are loaded last, after `styles.css` and `motion.js`, on the home page
-and on every case study.
+**The value proposition is five words instead of nine.** "Convierto
+problemas complejos en resultados medibles." It used to run six lines at
+82px with four of them red; it now runs two lines at 62px with two red
+words. The support line went from 21 words to 12.
 
-### 1 · Chapter rail
-A sticky bar under the nav, one per chapter, carrying the number, the name
-and a hairline that fills with **that chapter's own progress**. Each rail is
-pushed out by the next one, so the handover between chapters *is* the
-transition — no floating widget, no scroll hijack.
+**Caps came down.** The hero's two shouted principle lines are sentence
+case now. `THE PROBLEM CHOOSES THE TOOL.` and the `4 CASOS PRINCIPALES ·
+BANCA + SEGUROS` note are sentence case too. Small mono labels stay caps
+— that is a label style, not shouting.
 
-Chapter 01 has no rail: the hero already says `01 / POR QUÉ`, and the same
-label twice is noise.
+Every section lead, both About paragraphs, the music note and the contact
+body were cut roughly in half. Nothing factual was removed and no metric
+changed.
 
-### 2 · Film shutter
-Each chapter film opens from a horizontal slit to the full frame as it
-enters, while the video itself settles from 1.12× to 1×. The overlay copy
-follows in three beats: label, headline, closing line. A film band earns
-exactly one metaphor, and a shutter is it.
+## 2 · Films: only 01 and 05
 
-### 3 · Word-by-word headlines
-Every display headline is split into words, each in its own mask, arriving
-left to right with a 60 ms stagger. The text nodes are rebuilt, never
-replaced, so selection, search and screen readers see the same words. Masks
-are rebuilt automatically after a language change.
+`fred-presence` stays in the hero. `fred-people` — the team at the table
+— now introduces the References block, which is also the answer to
+"muy unipersonal": the second film on the page is a team, not another
+portrait of one face.
 
-### 4 · Chapter marquees
-A slow band of that chapter's own vocabulary at the seam before Method,
-Work and Contact. Two copies of the word set, track slides exactly −50%, so
-the loop never jumps.
+`fred-clarity`, `fred-impact` and `fred-work` were deleted along with
+their posters. **Package went from 12 MB to 4.5 MB.**
 
-### 5 · Metric counters
-Numbers roll up once, on entry. Only the numeric part animates, so `60→85%`
-and `24/7` survive intact. Tabular figures keep the grid from jittering.
+## 3 · Client logos, restored
 
-### 6 · The beat
-The mark in the header is an equalizer, so it now answers to scroll
-velocity — faster scrolling, taller bars, with a decay. The brand keeps time
-with the reader.
+`content.js` carries a `clientMarks` map (organisation → file). The mark
+shows on every case card on the home page and under the project name on
+each case study: Interbank, Rimac Seguros, MiBolsillo, Yellow Brain.
 
-### 7 · Rows that open
-On pointer devices the case insight is folded away and unfolds on hover or
-keyboard focus, so the list reads compact. On touch and under reduced
-motion it is simply always open: nothing is ever hidden from a reader who
-cannot hover.
+The organisation sits on its own line under the category. On mobile the
+meta row wraps, and any other arrangement pushes the logo into the middle
+of a run-on line.
 
-### 8 · Smaller things
-Magnetic buttons, a sweep fill on the primary button, and the scroll
-progress bar — `styles.css` already shipped the bar, but nothing was
-driving it.
+## 4 · Interaction — `css/refine.css` + `js/enhance.js`
 
-## The bug this version fixes
+Both files are additive; delete them and the site still works, it just
+gets louder and stops moving.
 
-The chapter films never revealed. `motion.js` observed them with
-`threshold: .12` and the new shutter clips them to 8% of their own height —
-and Chrome counts `clip-path` in `intersectionRatio`. Any threshold above
-0.08 could therefore never be reached: the film had to open before it was
-allowed to open.
+| Effect | Where |
+|---|---|
+| Word-by-word headline reveal | Every headline — each word rides out of its own mask, 55ms apart |
+| Section index | Fixed left rail; the active label fills red. Hidden under 1240px |
+| Result counters | Hero strip; only a leading number animates, so "3 DÍAS → 10 MIN" and "24/7" survive intact |
+| Card hover | A red rule draws across the top and the CTA slides — no glow, no zoom |
+| Magnetic buttons | Pointer devices only |
+| Button fill | Primary button fills from below on hover |
 
-Fixed with `threshold: 0` plus a bottom `rootMargin` that holds the reveal
-until the film is properly on screen. Worth remembering before adding any
-other clip-based reveal.
+Films load and play only while on screen. `prefers-reduced-motion:
+reduce` disables all of it and leaves the page static and readable.
 
-## Duplication removed
+## QA
 
-The floating spine and the new rail were both naming the chapter. The spine
-now keeps only what the rail cannot do: jump to the previous or next
-chapter.
+7 pages × 390px and 1440px: no console errors, no horizontal overflow,
+no broken images, one `<h1>` per page, ES/EN switching on every page.
+Scanned for the Yellow Brain client's original identifiers — no matches.
 
-## Reduced motion
-
-`prefers-reduced-motion: reduce` disables the shutter, the word masks, the
-marquees, the beat, the counters and the magnetic controls, and forces the
-case insight open. Everything renders; it just stops moving.
-
-## Reference note
-
-The brief pointed at fest.pe and dschool.stanford.edu. I could read both
-sites' content but not run them here, so the timings and curves are not
-copied — this is the same vocabulary (sticky chapter markers, shutter
-reveals, word-level type, repeating word bands), tuned to F.RED's own
-material.
+Home page height went from 7,498px to 7,236px on desktop even with the
+team film added, because the copy is shorter.
 
 ## Deploy
 
-Unchanged from v24: push to the repo root, `Settings → Pages → main / root`.
-`.nojekyll` is present.
+Upload the contents of this folder to the repository root so `index.html`
+stays at the root. `.nojekyll` is present.
 
 ---
 
-# v25.1 — density and hierarchy pass
+# v27 — films as environment, evidence with context
 
-Three changes on top of v25, plus a QA sweep.
+## 1 · The two films are now full-bleed
 
-## 1 · Films no longer open like an eye
+Film 01 is the background of section 01 and film 05 is the background of
+section 05 (contact), each edge to edge with the copy on top — the
+arrangement from the reference screenshots. A `.film-bed` sits at
+`z-index:-1` inside the section with a directional scrim: heavy on the
+copy side so text stays readable, light on the subject side so the film
+still reads as a film.
 
-The shutter (`clip-path` slit → full frame) is gone. Every film is simply
-there, full frame, exactly like the hero. Only the overlay copy still
-animates, in three short beats: label, headline, closing line.
+Both beds drift ~34px slower than the page as you scroll, so the copy
+sits in front of the footage rather than pasted onto it.
 
-Removing it also removed the black gap that showed while a film was still
-clipped — the state visible in the second screenshot.
+The hero headline shortened again — "Convierto complejidad en
+resultados." Fewer words survive on top of moving footage than on flat
+black.
 
-## 2 · Type scale and vertical rhythm — `css/refine.css`
+## 2 · The results strip says what it is
 
-The old ceilings were set for headlines of two or three words. Real Spanish
-copy runs six to nine words, so a 112px cap over a 9-character measure
-turned every question into six stacked lines.
+It was four bare numbers. Now the band opens with a labelled cell —
+**CASOS DE ÉXITO / Resultados en proyectos reales** — and each metric
+carries the project and client it came from:
 
-| Element | Before | Now |
-|---|---|---|
-| Hero | up to 144px | up to 82px |
-| Case question | up to 96px over 15ch | up to 44px over 720px |
-| Case row question | up to 61px over 17ch | up to 40px over 700px |
-| Closing question | up to 112px over 9ch | up to 52px over 780px |
-| Method step | 56vh tall each | auto height |
+| | |
+|---|---|
+| 97% | Asistente inteligente para asesores · Interbank |
+| 3 días → 10 min | Flujo digital de pólizas · Rimac Seguros |
+| +25 pp | Portal de autogestión · Rimac Seguros |
+| 7+ | Banca · Seguros · Startups · Consultoría |
 
-**Hierarchy is unchanged.** The hero is still the largest thing on the site,
-then chapter headlines, then case questions, then body. Only the gaps
-between those steps got smaller — which is what makes the page scan as a
-sales page instead of a poster series.
+Solid band rather than translucent: numbers over moving footage were
+hard to read. Cells arrive one at a time as the band enters.
 
-Result: home 11.4k → 10.9k px; each case study 3.4k → 1.7k px, about two
-screens instead of five.
+## 3 · Case studies: hierarchy instead of volume
 
-## 3 · Client marks
+The insight and learning lines were set at display size, so two
+sentences became eight lines and each case was a long scroll for very
+little content. They are now `clamp(20px, 1.9vw, 27px)` against a 44px
+question — a real step down instead of everything competing.
 
-`content.js` now carries a `clientMarks` map (organisation → logo). The mark
-appears next to the organisation in each case row on the home page and under
-the project name on the case study, so the two clients are shown rather than
-only named.
+**Each case page went from ~2,630px to ~1,610px.** The whole story now
+fits in about two screens. Section padding and the flow gap came down
+with it.
 
-Adding a third client is one line in `clientMarks` plus the file in
-`assets/brand/clients/`.
+## 4 · Colour — same palette, more range
 
-## QA notes
+No new colour. Onyx was one flat value on every section; sections now
+alternate a few points apart (`#0a0a0a`, `#070707`, `#0b0b0b`) so the
+page has depth. Each one opens with a single red hairline that fades to
+nothing across the width — it marks the boundary without another block
+of red type. Case cards alternate at 1–2% white. The tool band picks up
+a 4% red wash and a red left rule.
 
-Checked at 1440 and 390 across the home and the four case studies: no
-console errors, no horizontal overflow, one `<h1>` per page, ES/EN
-switching cleanly on every page.
+## 5 · New portrait
 
-Fixed along the way:
+The About photo is the new studio portrait, cropped 4:5 with head room.
 
-- **Descenders were being clipped.** The word masks are exactly one
-  line-height tall, and at `line-height: .96` that cut the tail of the
-  period in "BIEN." Mask now pads and pulls back by the same amount.
-- **`ch` and `em` measures were unreliable here.** `ch` resolves against
-  whichever font has actually loaded, and `em` against the element's own
-  clamped font-size — so the same value gave different line lengths before
-  and after the webfont arrived. All headline measures are now pixels.
-- **`styles.css` declares `.contact h3` five times, three with
-  `!important`.** The override in `refine.css` has to match that weight; it
-  is the only `!important` in the file that is not there for a reason worth
-  writing down.
-- **Breadcrumb separator pointed at nothing on mobile**, because the current
-  crumb is hidden below 680px. Hidden too.
-- **Inline `style="max-width:15ch"` on each case question** overrode every
-  stylesheet. Removed from the four case pages.
+## 6 · Interactions added this pass
 
-## Still open
+Bed parallax, staggered strip reveal, tool-tag hover, on top of what
+v26 already had: word-by-word headlines, section index rail, result
+counters, card hover rules, magnetic buttons.
 
-`fred-impact.mp4` has generated text on the gallery walls ("Zone 1 — People
-and Problem"). Nothing in CSS fixes that without blurring the film, which is
-what you asked to remove. Regenerating that one clip without on-set text is
-the only real fix.
+## QA
 
----
+7 pages × 390px and 1440px: no console errors, no horizontal overflow,
+no broken images. Home 6,642px desktop / 8,664px mobile.
 
-# v25.2 — Other Work tier + client logos
-
-Built on top of v25.1 without touching the four flagship case studies.
-Checksums confirmed identical before and after this pass.
-
-## What was added
-
-**Home page** — a second, lighter tier inside the existing `03 / CASOS`
-section, after the four flagship rows:
-
-- A short transition (`OTROS CASOS` / `OTHER WORK`) with its own headline
-  and one line of lead copy.
-- A two-column editorial grid — no cards, no colour blocks — for cases 05
-  (MiBolsillo) and 06 (Yellow Brain). Each column: number, category,
-  organisation (with its mark) and year, question, summary, a metric, and
-  a "VER CASO" link. Divided by a single vertical hairline, matching the
-  rest of the site's language.
-
-**Two new pages** — `work/mibolsillo.html` and
-`work/yellow-brain-research.html`, using the exact same template, CSS and
-scripts as the four flagship cases. Same narrative order throughout:
-THE QUESTION → THE NOISE → THE INSIGHT → THE BET → THE BUILD → THE IMPACT →
-THE LEARNING.
-
-**Client marks** — Interbank and Rimac Seguros already had theirs; this
-pass adds MiBolsillo and Yellow Brain, shown in three places: the Other
-Work preview on the home page, and each case's own hero. Yellow Brain's
-own logo is not a confidentiality risk — the brief only restricted the
-*original* client's identity; Yellow Brain itself is explicitly the
-allowed name throughout that case.
-
-## What stayed untouched
-
-- The four flagship case-study HTML files — confirmed by identical MD5
-  checksums before and after this pass.
-- Chapter navigation (`03 / 05 CASOS` unchanged), header, loader, About,
-  Testimonials, Contact, footer, the five videos, autoplay, GitHub Pages
-  structure.
-- "Next case" on the four flagship pages: still cycles 1→2→3→4→1. The two
-  research cases cycle 5→6→5 on their own — added by scoping the rotation
-  to each project's `tier`, so the flagship rotation's *behaviour*, not
-  just its markup, is unchanged.
-
-## New, fully additive files
-
-- `css/other-work.css` — every selector in it is new; nothing overrides an
-  existing rule. Delete the file and only this tier disappears.
-- `work/mibolsillo.html`, `work/yellow-brain-research.html`
-
-## Confidentiality — Yellow Brain
-
-Checked the entire project for "SIDERPERU" and "Construyamos" (original
-client identifiers): no matches anywhere — HTML, JS, data, alt text, or
-metadata. The only organisation name attached to case 06, anywhere in the
-public site, is **Yellow Brain**. The roadmap, research-evidence numbers,
-and validation count are abstracted exactly as specified (no industry
-references, no "59 users/participants" — always "research activities").
-
-## Content rule followed
-
-No commercial metrics were invented for either case. MiBolsillo's impact
-is the confirmed "4 behavioral profiles," not a fabricated adoption or
-revenue number. Yellow Brain's are the confirmed research-activity counts
-(31 + 5 + 23 = 59) and the 14-person validation count — nothing else.
-
-## QA — this pass
-
-Checked at 1440 and 390 across all 7 pages (5 previous + 2 new): zero
-console errors, zero horizontal overflow, zero broken images, four
-flagship pages byte-identical to the prior version.
-
-Also checked separately: tablet portrait (768) and tablet landscape
-(1024) for the new Other Work grid — both clean, both correctly falling
-back to the site's existing 980px breakpoint.
+One thing worth knowing: the strip's responsive rules had to be appended
+at the very end of `refine.css`. The desktop track definition was added
+after the earlier media queries and, at equal specificity, was winning at
+every width — the strip stayed in four columns on a phone. If you add
+more strip rules later, keep them above that final block.
 
 ---
 
-# v25.3 — mobile card layout fix + autoplay hardening
+# v28 — contact film, cleanup, tool band, QA pass
 
-## Fixed: client logo overlapping the category line on mobile
+## 1 · Contact film matches the reference frame
 
-Below 680px, `styles.css` turns each case card's meta line into a wrapped
-row (`flex-direction:row; flex-wrap:wrap`), so index, category, logo and
-organisation all fought for the same line and wrapped wherever the text
-happened to break — the disordered look in your screenshot.
+The film sat inside a section with no defined height, so it inherited
+whatever height the text column needed — short, and the video cropped
+tight. It now has its own stage: `.contact-film-stage`, `min-height:
+min(84vh, 760px)`, separate from the footer below it. The scrim is
+narrower and lighter — dark only up to about 34% of the width, clear
+by 68% — so the faces on the right stay bright, matching the reference.
 
-Fix, in `css/refine.css`: the organisation span now gets `flex-basis:100%`
-on mobile, which forces it onto its own line inside the same flex row
-without touching `styles.css` at all. Result: index + category on line
-one, `[logo] ORGANIZATION · YEAR` as a clear subtitle on line two — on
-all four flagship cards, both Other Work cards, and every case study
-hero. Checked at 390px on all seven pages.
+The footer moved outside the film's `isolation` boundary, onto plain
+ground below, so it no longer inherits a scrim meant for hero copy.
 
-## Strengthened: hero video autoplay
+## 2 · Section index rail removed
 
-Two independent autoplay attempts already existed (`loader.js` fires once
-when the intro finishes; `main.js` retries repeatedly via
-IntersectionObserver and several page-lifecycle events). This pass:
+It sat fixed at the same position as the hero's own text column, so on
+section 01 the two overlapped and neither read cleanly — confirmed by
+your screenshot. The top nav already provides the same five links with
+an active-state underline, so nothing was lost. Removed the DOM
+creation in `enhance.js` and its CSS in one pass; no other feature
+depended on it.
 
-- `loader.js`'s single attempt now retries twice more (at +250ms and
-  +700ms) if the browser rejects the first `play()` call instead of
-  giving up silently.
-- `main.js`'s retry schedule went from 3 attempts inside the first
-  450ms to 8 attempts spread across the first 4 seconds, and now also
-  fires on `DOMContentLoaded` in addition to the existing triggers.
+## 3 · Tool band: more presence, same restraint
 
-**Read this part honestly, though:** if the video you saw was showing
-iOS's own centered play icon, that is very likely Apple's autoplay
-policy blocking the very first play() call on a fresh page load — a
-device/OS-level decision, not a bug in this code. No amount of retrying
-from JavaScript can force it; Safari clears the block itself the moment
-the visitor makes any first tap on the page, which is also v24's original
-`unlockMedia()` behaviour (still in place, listens for `touchstart`,
-`pointerdown` and `click` anywhere on the page). What this pass adds is
-a wider window and more attempts for the cases where a retry genuinely
-would have worked — it doesn't override a hard OS block.
+Was one bold line, a gray sentence and a single wrapped row of pills —
+read as a footnote after Method. Now:
 
-One thing worth checking on your end: your screenshot's logo positioning
-already showed the client-mark feature, which means the live site was at
-least on the version from two passes ago. If the video issue looks
-identical after deploying this one, it's the iOS policy, not stale files.
+- A small eyebrow above it: `— LA CAJA DE HERRAMIENTAS`
+- The four disciplines from the site's own taxonomy — Negocio,
+  Experiencia, Tecnología, Narrativa — each with its own label and its
+  own one or two tags, in a four-column grid with hairline dividers
+- A closing line at the bottom: `No vendo herramientas. Las uso para
+  resolver problemas.`
+- Groups arrive left to right, 90ms apart, on entry
+
+Still monochrome and red-accent only — no new colour, no icons, no
+boxed cards. It just reads as a small section now instead of a
+sign-off.
+
+## 4 · QA pass
+
+- **35 combinations** (7 pages × 5 widths: 360, 390, 768, 1024, 1440):
+  zero console errors, zero horizontal overflow, zero broken images,
+  one `<h1>` per page.
+- **Keyboard**: tab order is skip-link → brand → five nav links → language
+  toggle → page content, in that order on every page. Focus rings are
+  visible (solid outline) on every interactive element, including the
+  primary button.
+- **Contrast**: checked the contact title directly against the film
+  behind it — white text over the darkened left two-thirds reads clean;
+  the red word sits far enough left that it never lands on the bright
+  part of the frame.
+- **ES/EN**: every string touched this pass — tool band, groups, contact
+  — confirmed translated on toggle, no residual Spanish or English
+  leaking into the other language.
+- **Mobile menu**: opens, closes on link tap, and the in-page anchor
+  still scrolls correctly afterward.
+
+## Deploy
+
+Same as before: upload the folder contents to the repository root.
+
+---
+
+# v29 — contact collapsed to one column, case questions resized
+
+Two fixes, confirmed against your reference screenshots.
+
+## 1 · Contact: one left column, nothing on the face
+
+v28 kept the two-column split from the original sales template —
+question in one column, "BIEN." + body + CTA in a second column that
+landed on top of the people in the film. Your reference showed all four
+pieces (question, BIEN., body, CTA) stacked as one left-aligned block,
+with the film left clear on the right.
+
+Markup: the two divs merged into one `.contact-sales-copy` block.
+CSS: `.contact-sales-grid--stacked { display: block }` replaces the grid,
+and `.contact-sales-good` / `.contact-sales-body` carry their own type
+now that they're not living inside the old `.contact-sales-side` column.
+Checked at 1440 and 390 — matches the reference at both.
+
+## 2 · Case card questions, resized
+
+They were set at up to 44px — close enough to the 50px section titles
+that a card's question and the section's own headline read as the same
+level of importance. Down to a `29px` ceiling on desktop, `26px` on
+mobile. The metric below each question is still the largest thing in
+the card, which is correct — the number is the proof, the question is
+the setup.
+
+## QA
+
+Same 35-combination sweep (7 pages × 5 widths): zero overflow, zero
+console errors. EN confirmed on the new contact markup.
+
+---
+
+# v30 — tool band de-boxed, case questions use their width
+
+## 1 · Tool band no longer clashes with the page's own line language
+
+At the 900px breakpoint (2-column grid) the boxed treatment — red left
+rule, tinted background, its own top and bottom rules — sat directly
+under `.method-fast`'s hairline dividers and right above the case
+grid's hairline dividers. Three different line languages stacked in
+one small stretch of the page is what was reading as a collision.
+
+Removed the left red rule and the background tint; kept a single top
+hairline, matching `.method-fast` and the case grid exactly. It now
+reads as the close of Method rather than a boxed callout competing with
+it.
+
+Also rebalanced the four groups: Narrativa had only one tag
+(Storytelling) against two in every other column, which is the
+uneven-looking gap in your screenshot. Added Facilitation, so every
+group carries two.
+
+## 2 · Case questions now use the width they have
+
+`styles.css` capped every case-card question at `16ch` regardless of
+how wide the card actually was — the empty space to the right in your
+screenshot. Overridden to `480px` (`420px` under 980px), sized against
+the longest real question in the data (81 characters) so it still
+wraps sensibly rather than running edge to edge. Two lines for most
+cards, three for the longest one — never four.
+
+## QA
+
+49 combinations this pass (7 pages × 7 widths, including 900px and
+1366px specifically to catch the breakpoint where the tool-band issue
+was visible): zero overflow, zero console errors.
+
+---
+
+# v31 — tool band spacing, contained video on mobile, a real cascade bug
+
+## 1 · Tool band divider spacing
+
+`.tool-group` had `padding: 18px 18px 4px 0` — zero padding on the left.
+Every column's content sat flush against the divider to its left while
+keeping 24px before its own right divider, which is what read as
+"stuck to the line, should be centered." Rewritten symmetric: 24px on
+both sides of every inner divider, with the two outer edges (first
+column's left, last column's right) flush against the section's own
+margins so the row still lines up with the heading above it. Fixed the
+same asymmetry in the 900px two-column fallback.
+
+## 2 · Video on mobile/tablet: contained banner instead of full-bleed
+
+You asked what I'd recommend — here's the reasoning and what's built.
+
+**The options I weighed:**
+- Keep it full-bleed but darken it further — rejected. A dominant
+  full-screen video is still a dominant full-screen video, just dimmer.
+- Static poster only, no motion, below 900px — saves the most weight
+  and battery, but throws away the one thing the cinematic hero is
+  actually for.
+- **A contained banner: full width, capped height, sitting above the
+  text in normal flow instead of behind it.** This is what's built.
+  It keeps the edge-to-edge cinematic feel (nothing shrinks into a
+  rounded card) but stops it from being the whole screen — 34vh capped
+  between 190–280px, versus the 70–84vh it was claiming before.
+
+Below 900px, `.film-bed` switches from `position: absolute; inset: 0`
+to a normal-flow block with that capped height, and the copy that used
+to sit on top of it now follows below on solid ground. Because nothing
+overlays the video anymore, the heavy legibility scrim came off too —
+it's now a soft bottom fade, there for blend, not contrast protection.
+Same treatment on both films (hero and contact). Parallax is switched
+off in this mode (`transform: none !important`) since it was tuned for
+a full-bleed background, not a small fixed banner.
+
+## 3 · A real bug this surfaced
+
+Chasing the leftover gap above the mobile hero video turned up
+something bigger: a selector — `section[data-main-section]:not(#why)`
+— survives in `styles.css` from before this template's rewrite. No
+section carries `id="why"` anymore, so it matches every section, and
+because `:not(#id)` carries ID-level specificity, it was silently
+beating this template's own `body.v25-sales .section` padding rule at
+every width below 980px — on **all five sections**, not just the hero.
+
+Restored each section's real, intended padding (58px at 980px, 48px at
+680px) with a matching-specificity override. This is a likely
+contributor to the "too much scroll on mobile" feedback from earlier in
+this project — it was quietly adding extra padding-top and
+padding-bottom to every section on every phone and tablet visit,
+independent of any of the content trims made along the way.
+
+## QA
+
+49 combinations (7 pages × 7 widths, 360–1440, including 900px where
+the tool band's 2-column fallback and the video's mode switch both
+live): zero overflow, zero console errors. Checked tablet at 768×1024
+specifically for the new contained video treatment.
